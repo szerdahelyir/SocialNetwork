@@ -6,7 +6,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -44,6 +43,20 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
+    private String firstName;
+
+    private String lastName;
+
+    private String gender;
+
+    private String description;
+
+    private String location;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "image_id", referencedColumnName = "id")
+    private Image profilePicture;
+
 
     public User(String email, String password, LocalDateTime dor) {
         this.email = email;
@@ -51,13 +64,4 @@ public class User {
         this.dor=dor;
     }
 
-
-    @Override
-    public String toString() {
-        return "Student{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                ", dob=" + dor +
-                '}';
-    }
 }
