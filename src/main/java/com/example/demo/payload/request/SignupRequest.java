@@ -3,9 +3,10 @@ package com.example.demo.payload.request;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.validator.constraints.NotBlank;
+
 
 import javax.validation.constraints.Email;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Getter
@@ -13,12 +14,20 @@ import java.util.Set;
 public class SignupRequest {
 
     @Email
-    @NotBlank
     private String email;
 
     private Set<String> role;
 
-    @NotBlank
     private String password;
+
+    private String firstName;
+
+    private String lastName;
+
+    private String gender;
+
+    private String location;
+
+    private LocalDateTime dob;
 
 }

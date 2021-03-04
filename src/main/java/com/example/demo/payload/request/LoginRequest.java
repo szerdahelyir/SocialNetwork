@@ -7,10 +7,9 @@ import org.hibernate.validator.constraints.NotBlank;
 @Getter
 @Setter
 public class LoginRequest {
-    @NotBlank
+
     private String email;
 
-    @NotBlank
     private String password;
 
 }

@@ -3,6 +3,7 @@ package com.example.demo.models;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -35,7 +36,11 @@ public class User {
     @NotBlank
     private String password;
 
-    private LocalDateTime dor;
+    @CreatedDate
+    @Column(updatable = false)
+    private Long registrationDate;
+
+    private LocalDateTime dob;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(	name = "user_roles",
@@ -43,14 +48,18 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
+    @NotBlank
     private String firstName;
 
+    @NotBlank
     private String lastName;
 
+    @NotBlank
     private String gender;
 
     private String description;
 
+    @NotBlank
     private String location;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -58,10 +67,20 @@ public class User {
     private Image profilePicture;
 
 
-    public User(String email, String password, LocalDateTime dor) {
+    public User(String email,
+                String password,
+                String firstName,
+                String lastName,
+                String location,
+                LocalDateTime dob,
+                String gender) {
         this.email = email;
         this.password = password;
-        this.dor=dor;
+        this.firstName=firstName;
+        this.lastName=lastName;
+        this.location=location;
+        this.dob=dob;
+        this.gender=gender;
     }
 
 }

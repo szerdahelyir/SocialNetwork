@@ -64,7 +64,7 @@
       <mat-card-title>Register</mat-card-title>
     </mat-card-header>
 
-    <form class="example-form"
+    <form 
     *ngIf="!isSuccessful"
         name="form"
         (ngSubmit)="f.form.valid && onSubmit()"
@@ -72,6 +72,62 @@
         novalidate>
 
       <mat-card-content>
+        <mat-form-field class="width-50">
+          <input matInput placeholder="Firstname"
+          type="input"
+            class="form-control"
+            name="firstName"
+            [(ngModel)]="form.firstName"
+            required
+            #firstname="ngModel">
+        </mat-form-field>
+
+        <mat-form-field class="width-50 ml-10">
+          <input matInput placeholder="Lastname"
+            type="input"
+            class="form-control"
+            name="lastName"
+            [(ngModel)]="form.lastName"
+            required
+            #lastname="ngModel">
+        </mat-form-field>
+
+        <label id="example-radio-group-label">Gender: </label>
+        <br>
+        <div>
+          <mat-radio-group 
+            class="form-control"
+            name="gender" 
+            [(ngModel)]="form.gender" 
+            required 
+            #gender="ngModel"  >
+            <mat-radio-button value="male">Male</mat-radio-button>
+            <mat-radio-button class="ml-10" value="female">Female</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Date of birth</mat-label>
+          <input matInput 
+            [matDatepicker]="picker"
+            class="form-control"
+            name="dob"
+            [(ngModel)]="form.dob"
+            required
+            #dob="ngModel">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="City"
+            type="input"
+            class="form-control"
+            name="city"
+            [(ngModel)]="form.city"
+            required
+            #city="ngModel">
+        </mat-form-field>
 
         <mat-form-field class="example-full-width">
           <input matInput placeholder="Email"
