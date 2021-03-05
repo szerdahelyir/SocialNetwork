@@ -9,7 +9,7 @@ import { TokenService } from './services/token.service';
 export class AppComponent {
   private roles: string[];
   isLoggedIn = false;
-  username: string;
+  email: string;
 
   constructor(private tokenStorageService: TokenService) { }
 
@@ -20,10 +20,14 @@ export class AppComponent {
       const user = this.tokenStorageService.getUser();
       this.roles = user.roles;
 
-      this.username = user.username;
+      this.email = user.email;
     }
   }
 
+  asd(){
+    console.log(this.tokenStorageService.getUser());
+    console.log(this.email);
+  }
   logout(): void {
     this.tokenStorageService.signOut();
     window.location.reload();
