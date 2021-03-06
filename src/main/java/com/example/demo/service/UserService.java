@@ -1,4 +1,4 @@
-package com.example.demo.user;
+package com.example.demo.service;
 
 
 import com.example.demo.models.User;
@@ -22,13 +22,15 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public void addNewUser(User user) {
-        Optional<User> userOptional=userRepository
-                .findUserByEmail(user.getEmail());
-        if(userOptional.isPresent()){
-            throw new IllegalStateException("email taken");
+
+    public User getUser(Long userId){
+        boolean exists = userRepository.existsById(userId);
+        if(!exists){
+            throw new IllegalStateException(
+                    "user with id " + userId + " does not exist"
+            );
         }
-        userRepository.save(user);
+        return userRepository.findUserById(userId);
     }
 
     public void deleteUser(Long userId) {
