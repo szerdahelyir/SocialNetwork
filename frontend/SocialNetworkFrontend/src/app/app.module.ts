@@ -25,6 +25,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
+import { AvatarModule } from 'ngx-avatar';
 
 
 
@@ -58,7 +59,8 @@ import {MatListModule} from '@angular/material/list';
     MatFormFieldModule,
     MatNativeDateModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
+    AvatarModule
   ],
   providers: [
     authInterceptorProviders,
