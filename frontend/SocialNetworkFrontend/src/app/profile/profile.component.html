@@ -3,12 +3,12 @@
     <div>
         <ngx-avatar class="profilepic" *ngIf="!curruser.profilePicture" size="150" src="assets/avatar.png"></ngx-avatar>
     </div>
-    <div class="mg20">
+    <div>
         <h2>{{curruser.firstName}} {{curruser.lastName}}</h2>
     </div>
   </div>
 
-  <div class="mg20">
+  <div>
     <ng-container *ngIf="curruser.description; else noDescription">
         {{curruser.description}}
     </ng-container>
@@ -17,6 +17,7 @@
         Please fill out your about me infos.
     </ng-template>
   </div>
+
     <strong>Roles:</strong>
     <ul>
       <li *ngFor="let role of currentUser.roles">

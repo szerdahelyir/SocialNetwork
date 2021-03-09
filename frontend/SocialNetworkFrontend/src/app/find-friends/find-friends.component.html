@@ -1,0 +1,6 @@
+<p>find-friends works!</p>
+<div *ngFor="let user of users">
+    <p >{{user | json}}</p>
+    <button (click)="test(user.id)"> Add</button>
+</div>
+

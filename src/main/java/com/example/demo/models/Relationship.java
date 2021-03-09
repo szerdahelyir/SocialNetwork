@@ -13,7 +13,7 @@ import javax.validation.constraints.NotBlank;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name="relationships")
+@Table(name="relationships",uniqueConstraints={@UniqueConstraint(columnNames = {"user_one_id", "user_two_id"})})
 public class Relationship {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,10 +28,17 @@ public class Relationship {
     @JoinColumn(name = "user_two_id", nullable = false)
     private User user2;
 
-    @NotBlank
+
     private Integer status;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "action_user_id", nullable = false)
     private User actionUser;
+
+    public Relationship(User user, User user2, Integer status, User actionUser) {
+        this.user = user;
+        this.user2 = user2;
+        this.status = status;
+        this.actionUser = actionUser;
+    }
 }

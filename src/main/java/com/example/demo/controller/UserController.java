@@ -3,15 +3,20 @@ package com.example.demo.controller;
 import com.example.demo.DTOs.UserDTO;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.models.User;
+import com.example.demo.security.UserDetailsImpl;
 import com.example.demo.service.UserService;
+import com.example.demo.util.AuthenticationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+
 @RestController
 @RequestMapping(path="api/users")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class UserController {
     @Autowired
     private final UserService userService;
@@ -28,7 +33,8 @@ public class UserController {
 
     @GetMapping
     public List<UserDTO> getUsers(){
-        return userMapper.toUserDTOs(userService.getUsers());
+        Long id= AuthenticationUtil.getAuthenticatedUserId();
+        return userMapper.toUserDTOs(userService.getUsers(id));
     }
 
     @GetMapping(path="{userId}")

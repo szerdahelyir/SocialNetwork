@@ -14,4 +14,8 @@ export class UserService {
   getUser(id){
     return this.http.get(USER_API + id);
   }
+
+  getUsers(){
+    return this.http.get(USER_API);
+  }
 }

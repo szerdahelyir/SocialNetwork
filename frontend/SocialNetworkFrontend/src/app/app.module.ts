@@ -26,6 +26,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
 import { AvatarModule } from 'ngx-avatar';
+import { FindFriendsComponent } from './find-friends/find-friends.component';
 
 
 
@@ -37,7 +38,8 @@ import { AvatarModule } from 'ngx-avatar';
     LoginComponent,
     RegisterComponent,
     HomeComponent,
-    ProfileComponent
+    ProfileComponent,
+    FindFriendsComponent
   ],
   imports: [
     BrowserModule,
