@@ -1,4 +1,4 @@
-package com.example.demo.DTOs;
+package com.example.demo.dto;
 
 import com.example.demo.models.Image;
 import lombok.Data;
@@ -21,7 +21,7 @@ public class UserDTO {
 
     private String email;
 
-    private Long registrationDate;
+    private LocalDateTime registrationDate;
 
     private LocalDateTime dob;
 

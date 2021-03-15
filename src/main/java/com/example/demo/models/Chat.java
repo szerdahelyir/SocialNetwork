@@ -3,8 +3,6 @@ package com.example.demo.models;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -12,7 +10,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name="chats")
+@Table(name = "chats")
 public class Chat {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

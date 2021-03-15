@@ -1,6 +1,6 @@
 package com.example.demo.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name="relationships",uniqueConstraints={@UniqueConstraint(columnNames = {"user_one_id", "user_two_id"})})
+@Table(name = "relationships", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_one_id", "user_two_id"})})
 public class Relationship {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

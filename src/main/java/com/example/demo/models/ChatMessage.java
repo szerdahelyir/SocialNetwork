@@ -11,7 +11,7 @@ import javax.validation.constraints.NotBlank;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name="chat_messages")
+@Table(name = "chat_messages")
 public class ChatMessage {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
