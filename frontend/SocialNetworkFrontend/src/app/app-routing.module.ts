@@ -6,6 +6,8 @@ import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AuthGuard } from './auth.guard';
 import { FindFriendsComponent } from './find-friends/find-friends.component';
+import { FriendsComponent } from './friends/friends.component';
+import { ProfilesComponent } from './profiles/profiles.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full', canActivate: [AuthGuard]},
@@ -13,7 +15,9 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
-  { path: 'find-friends', component: FindFriendsComponent, canActivate: [AuthGuard]}
+  { path: 'find-friends', component: FindFriendsComponent, canActivate: [AuthGuard]},
+  { path: 'friends', component: FriendsComponent, canActivate: [AuthGuard]},
+  { path: 'profiles/:id', component: ProfilesComponent, canActivate: [AuthGuard]}
   
 ];
 

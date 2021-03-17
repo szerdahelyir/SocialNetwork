@@ -1,7 +1,5 @@
 .wrapper{
-    margin-top: 64px;
     display: flex;
-    position: relative;
   }
   
   .wrapper .sidebar{
@@ -41,6 +39,6 @@
   }
     
   .wrapper .main_content{
-    width: 85%;
-    margin-left: 15%;
+    width: 100%;
+    margin-left: 0%;
   }

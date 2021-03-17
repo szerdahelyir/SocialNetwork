@@ -27,6 +27,11 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
 import { AvatarModule } from 'ngx-avatar';
 import { FindFriendsComponent } from './find-friends/find-friends.component';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { FriendsComponent } from './friends/friends.component';
+import { ProfilesComponent } from './profiles/profiles.component';
+import { PostsComponent } from './posts/posts.component';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 
 
@@ -39,7 +44,10 @@ import { FindFriendsComponent } from './find-friends/find-friends.component';
     RegisterComponent,
     HomeComponent,
     ProfileComponent,
-    FindFriendsComponent
+    FindFriendsComponent,
+    FriendsComponent,
+    ProfilesComponent,
+    PostsComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +70,9 @@ import { FindFriendsComponent } from './find-friends/find-friends.component';
     MatNativeDateModule,
     MatSidenavModule,
     MatListModule,
-    AvatarModule
+    AvatarModule,
+    MatPaginatorModule,
+    MatGridListModule
   ],
   providers: [
     authInterceptorProviders,

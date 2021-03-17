@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { FriendsService } from '../services/friends.service';
-import { UserService } from '../services/user.service';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
+import { FriendsService } from '../services/friends.service';
+import { UserService } from '../services/user.service';
 
 @Component({
-  selector: 'app-find-friends',
-  templateUrl: './find-friends.component.html',
-  styleUrls: ['./find-friends.component.css']
+  selector: 'app-friends',
+  templateUrl: './friends.component.html',
+  styleUrls: ['./friends.component.css']
 })
-export class FindFriendsComponent implements OnInit {
+export class FriendsComponent implements OnInit {
 
   users: any[];
   totalElements: number = 0;
@@ -19,11 +19,11 @@ export class FindFriendsComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit(): void {
-    this.getUsers({ page: "0", size: "10" });
+    this.getFriends({ page: "0", size: "10" });
   }
 
-  private getUsers(request) {
-    this.userService.getUsers(request)
+  private getFriends(request) {
+    this.friendsService.getFriends(request)
       .subscribe(data => {
         this.users = data['content'];
         this.totalElements = data['totalElements'];
@@ -41,6 +41,7 @@ export class FindFriendsComponent implements OnInit {
     const request = {};
     request['page'] = event.pageIndex.toString();
     request['size'] = event.pageSize.toString();
-    this.getUsers(request);
+    this.getFriends(request);
   }
+
 }

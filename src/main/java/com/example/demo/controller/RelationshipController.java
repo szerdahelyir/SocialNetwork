@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.service.RelationshipService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,7 +26,8 @@ public class RelationshipController {
     }
 
     @GetMapping("/friends")
-    public List<UserDTO> getFriends() {
-        return this.relationshipService.getFriends();
+    public Page<UserDTO> getFriends(@RequestParam(name = "page", defaultValue = "0") int page,
+                                    @RequestParam(name = "size", defaultValue = "10") int size) {
+        return this.relationshipService.getFriends(page,size);
     }
 }

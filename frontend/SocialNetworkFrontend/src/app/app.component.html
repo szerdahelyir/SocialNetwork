@@ -1,33 +1,40 @@
-<mat-toolbar color="primary" class="app-header">
-  <div><a href="/home"  class="social">SzeNetwork</a></div>
-  <span *ngIf="!isLoggedIn" class="nav-tool-items">
-    <a mat-button routerLink="login" routerLinkActive="active">Log in</a>
-    <a mat-button mat-raised-button routerLink="register" routerLinkActive="active">Register </a>
-  </span>
-  <span *ngIf="isLoggedIn" class="nav-tool-items">
-    <a mat-button (click)="logout()">Logout</a>
-  </span>
-</mat-toolbar>
-
-
-
-<div class="wrapper" *ngIf="isLoggedIn">
-  <div class="sidebar">
-      <ul>
-          <li><a href="/home"><i class="fas fa-home"></i>Home</a></li>
-          <li><a href="/profile"><i class="fas fa-user"></i>Profile</a></li>
-          <li><a href="#"><i class="fas fa-address-card"></i>Friends</a></li>
-          <li><a href="/find-friends"><i class="fas fa-project-diagram"></i>Find friends</a></li>
-          <li><a href="#"><i class="fas fa-project-diagram"></i>Messages</a></li>
-          <li><a href="#" (click)="logout()"><i class="fas fa-map-pin"></i>Logout</a></li>
-      </ul> 
+<mat-grid-list cols="10" rowHeight="4em">
+  <mat-grid-tile [colspan]="10"><mat-toolbar color="primary" class="app-header">
+    <div><a href="/home"  class="social">SzeNetwork</a></div>
+    <span *ngIf="!isLoggedIn" class="nav-tool-items">
+      <a mat-button routerLink="login" routerLinkActive="active">Log in</a>
+      <a mat-button mat-raised-button routerLink="register" routerLinkActive="active">Register </a>
+    </span>
+    <span *ngIf="isLoggedIn" class="nav-tool-items">
+      <a mat-button (click)="logout()">Logout</a>
+    </span>
+  </mat-toolbar></mat-grid-tile>
+  <mat-grid-tile [colspan]="2"><div class="wrapper" *ngIf="isLoggedIn">
+    <div class="sidebar">
+        <ul>
+            <li><a href="/home"><i class="fas fa-home"></i>Home</a></li>
+            <li><a href="/profile"><i class="fas fa-user"></i>Profile</a></li>
+            <li><a href="/friends"><i class="fas fa-address-card"></i>Friends</a></li>
+            <li><a href="/find-friends"><i class="fas fa-project-diagram"></i>Find friends</a></li>
+            <li><a href="#"><i class="fas fa-project-diagram"></i>Messages</a></li>
+            <li><a href="#" (click)="logout()"><i class="fas fa-map-pin"></i>Logout</a></li>
+        </ul> 
+    </div>
+    
   </div>
-  <div class="main_content">
-    <router-outlet></router-outlet>
-  </div>
-</div>
+</mat-grid-tile>
+<mat-grid-tile [colspan]="8" [rowspan]="12">
+  <router-outlet></router-outlet>
+</mat-grid-tile>
+</mat-grid-list>
 
-<router-outlet></router-outlet>
+
+
+
+
+
+
+
 
 <!-- <div id="app">
   <nav class="navbar navbar-expand navbar-dark bg-dark">

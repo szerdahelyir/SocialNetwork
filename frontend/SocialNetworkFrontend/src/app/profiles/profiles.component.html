@@ -1,0 +1,30 @@
+<mat-grid-list cols="2">
+    <mat-grid-tile>
+        <div *ngIf="user" class="container">
+            <div>
+              <div>
+                  <ngx-avatar class="profilepic" *ngIf="!user.profilePicture" size="150" src="assets/avatar.png"></ngx-avatar>
+              </div>
+              <div class="name">
+                  <h2>{{user.firstName}} {{user.lastName}} </h2>
+              </div>
+            </div>
+        
+            <div>
+              <ng-container *ngIf="user.description; else noDescription">
+                  {{user.description}}
+              </ng-container>
+        
+              <ng-template #noDescription>
+                  Please fill out your about me infos.
+              </ng-template>
+            </div>
+            
+        </div>
+        
+    </mat-grid-tile>
+    <mat-grid-tile>
+        asdaasdasdasd
+    </mat-grid-tile>
+  </mat-grid-list>
+

@@ -8,6 +8,9 @@ import com.example.demo.repository.RelationshipRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.util.AuthenticationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -67,22 +70,46 @@ public class RelationshipService {
         relationshipRepository.save(relationship);
     }
 
-    public List<UserDTO> getFriends() {
+    public Page<UserDTO> getFriends(int page, int size) {
         Long currentId = AuthenticationUtil.getAuthenticatedUserId();
-        List<Relationship> relationships = relationshipRepository.findFriends(currentId, 1);
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Page<Relationship> relationships = relationshipRepository.findFriends(currentId, 1,pageRequest);
         List<User> friends = relationships.stream()
                 .map(r -> r.getUser().getId().equals(AuthenticationUtil.getAuthenticatedUserId()) ? r.getUser2() : r.getUser())
                 .collect(Collectors.toList());
-        return this.userMapper.toUserDTOs(friends);
+        List<UserDTO> UserDTOfriends = this.userMapper.toUserDTOs(friends);
+        return new PageImpl<>(UserDTOfriends, pageRequest, relationships.getTotalElements());
     }
 
     public List<Long> getFriendsIds(){
         Long currentId = AuthenticationUtil.getAuthenticatedUserId();
-        List<Relationship> relationships = relationshipRepository.findFriends(currentId, 1);
+        List<Relationship> relationships = relationshipRepository.findFriendRelationships(currentId, 1);
         List<Long> friendsIds = relationships.stream()
                 .map(r -> r.getUser().getId().equals(AuthenticationUtil.getAuthenticatedUserId()) ? r.getUser2().getId() : r.getUser().getId())
                 .collect(Collectors.toList());
         return friendsIds;
+    }
+
+    public Integer relationshipWithUser(Long userId){
+        if(relationshipRepository.findRelationship(userId < AuthenticationUtil.getAuthenticatedUserId() ? userId : AuthenticationUtil.getAuthenticatedUserId(),
+                userId > AuthenticationUtil.getAuthenticatedUserId() ? userId : AuthenticationUtil.getAuthenticatedUserId())!=null) {
+            Relationship relationship = relationshipRepository.findRelationship(userId < AuthenticationUtil.getAuthenticatedUserId() ? userId : AuthenticationUtil.getAuthenticatedUserId(),
+                    userId > AuthenticationUtil.getAuthenticatedUserId() ? userId : AuthenticationUtil.getAuthenticatedUserId());
+            // én küldtem neki requestet
+            if (relationship.getActionUser().getId().equals(AuthenticationUtil.getAuthenticatedUserId()) && relationship.getStatus().equals(0)) {
+                return 0;
+            }
+            // ő küldött requestet nekem
+            else if (relationship.getActionUser().getId().equals(userId) && relationship.getStatus().equals(0)) {
+                return 1;
+            }
+            // barátok
+            else if (relationship.getStatus().equals(1)) {
+                return 2;
+            }
+        }
+        // nem barátok
+        return 3;
     }
 
 

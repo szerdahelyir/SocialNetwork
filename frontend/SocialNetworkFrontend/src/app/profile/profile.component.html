@@ -1,27 +1,32 @@
-<div class="container" *ngIf="curruser">
-  <div>
-    <div>
-        <ngx-avatar class="profilepic" *ngIf="!curruser.profilePicture" size="150" src="assets/avatar.png"></ngx-avatar>
-    </div>
-    <div>
-        <h2>{{curruser.firstName}} {{curruser.lastName}}</h2>
-    </div>
-  </div>
+<mat-grid-list cols="2">
+    <mat-grid-tile>
+        <div class="container" *ngIf="curruser">
+            <div>
+            <div>
+                <ngx-avatar class="profilepic" *ngIf="!curruser.profilePicture" size="150" src="assets/avatar.png"></ngx-avatar>
+            </div>
+            <div>
+                <h2>{{curruser.firstName}} {{curruser.lastName}}</h2>
+            </div>
+            </div>
 
-  <div>
-    <ng-container *ngIf="curruser.description; else noDescription">
-        {{curruser.description}}
-    </ng-container>
+            <div>
+            <ng-container *ngIf="curruser.description; else noDescription">
+                {{curruser.description}}
+            </ng-container>
 
-    <ng-template #noDescription>
-        Please fill out your about me infos.
-    </ng-template>
-  </div>
-
-    <strong>Roles:</strong>
-    <ul>
-      <li *ngFor="let role of currentUser.roles">
-        {{ role }}
-      </li>
-    </ul>
-  </div>
+            <ng-template #noDescription>
+                Please fill out your about me infos.
+            </ng-template>
+            </div>
+            <button mat-button>Edit profile 
+                <span class="material-icons">
+                mode_edit
+                </span>
+            </button>
+        </div>
+    </mat-grid-tile>
+    <mat-grid-tile>
+        <app-posts [id]="curruser.id"></app-posts>
+    </mat-grid-tile>
+</mat-grid-list>
