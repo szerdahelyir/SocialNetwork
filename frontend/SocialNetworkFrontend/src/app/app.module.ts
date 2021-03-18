@@ -32,6 +32,8 @@ import { FriendsComponent } from './friends/friends.component';
 import { ProfilesComponent } from './profiles/profiles.component';
 import { PostsComponent } from './posts/posts.component';
 import {MatGridListModule} from '@angular/material/grid-list';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { CommentsComponent } from './comments/comments.component';
 
 
 
@@ -47,7 +49,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
     FindFriendsComponent,
     FriendsComponent,
     ProfilesComponent,
-    PostsComponent
+    PostsComponent,
+    CommentsComponent
   ],
   imports: [
     BrowserModule,
@@ -72,7 +75,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
     MatListModule,
     AvatarModule,
     MatPaginatorModule,
-    MatGridListModule
+    MatGridListModule,
+    InfiniteScrollModule
   ],
   providers: [
     authInterceptorProviders,

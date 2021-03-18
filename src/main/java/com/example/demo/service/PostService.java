@@ -1,8 +1,12 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.PostDTO;
+import com.example.demo.dto.PostResponseDTO;
+import com.example.demo.mapper.PostMapper;
+import com.example.demo.mapper.UserMapper;
 import com.example.demo.models.Post;
 import com.example.demo.models.User;
-import com.example.demo.dto.PostDTO;
+import com.example.demo.repository.CommentRepository;
 import com.example.demo.repository.PostRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.util.AuthenticationUtil;
@@ -10,31 +14,52 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PostService {
     @Autowired
-    PostRepository postRepository;
+    private PostRepository postRepository;
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    RelationshipService relationshipService;
+    private RelationshipService relationshipService;
 
-    public List<Post> getPostsOfCurrentUser(){
+    @Autowired
+    private CommentRepository commentRepository;
+
+    @Autowired
+    private PostMapper postMapper;
+
+    @Autowired
+    private UserMapper userMapper;
+
+    public List<PostResponseDTO> getPostsOfCurrentUser() {
         Long id = AuthenticationUtil.getAuthenticatedUserId();
-        return postRepository.findAllByUserId(id);
+        List<Post> posts = postRepository.findAllByUserId(id);
+
+        List<PostResponseDTO> responseDTOS = posts
+                .stream()
+                .map(p -> postMapper.toPostResponseDTO
+                        (p,
+                                userMapper.toUserDTO(p.getUser(), 4),
+                                commentRepository.findByPostId(p.getId()).size()
+                        )
+                )
+                .collect(Collectors.toList());
+        return responseDTOS;
     }
 
-    public List<Post> getPostsOfFriends(){
-        List<Long> friendIds=this.relationshipService.getFriendsIds();
+    public List<Post> getPostsOfFriends() {
+        List<Long> friendIds = this.relationshipService.getFriendsIds();
         return this.postRepository.findPostsByUserIds(friendIds);
     }
 
-    public void createPost(PostDTO postDTO){
-        User user=userRepository.findUserById(AuthenticationUtil.getAuthenticatedUserId());
-        Post post=new Post(postDTO.getContent(),user);
+    public void createPost(PostDTO postDTO) {
+        User user = userRepository.findUserById(AuthenticationUtil.getAuthenticatedUserId());
+        Post post = new Post(postDTO.getContent(), user);
         postRepository.save(post);
     }
 

@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.PostResponseDTO;
 import com.example.demo.models.Post;
 import com.example.demo.dto.PostDTO;
 import com.example.demo.service.PostService;
@@ -16,7 +17,7 @@ public class PostController {
     PostService postService;
 
     @GetMapping("/myposts")
-    public List<Post> getCurrentUserPosts() {
+    public List<PostResponseDTO> getCurrentUserPosts() {
         return this.postService.getPostsOfCurrentUser();
     }
 

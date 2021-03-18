@@ -11,10 +11,10 @@ import java.util.List;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
-    @Query("SELECT p FROM Post p JOIN FETCH p.user WHERE p.user.id = :userid")
+    @Query("SELECT p FROM Post p JOIN FETCH p.user WHERE p.user.id = :userid ORDER BY p.creationDate DESC")
     List<Post> findAllByUserId(@Param("userid") Long userid);
 
-    @Query(value = "SELECT p FROM Post p JOIN FETCH p.user WHERE p.user.id IN :ids")
+    @Query(value = "SELECT p FROM Post p JOIN FETCH p.user WHERE p.user.id IN :ids ORDER BY p.creationDate DESC")
     List<Post> findPostsByUserIds(@Param("ids") Collection<Long> ids);
 
     Post findPostById(Long id);

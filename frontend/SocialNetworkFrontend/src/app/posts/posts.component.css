@@ -1,0 +1,10 @@
+.infscroll{
+    overflow:scroll;
+    height:100%;
+}
+.posts{
+    margin:20px;
+}
+mat-card{
+    border-radius: 25px;
+}
