@@ -1,4 +1,4 @@
-<mat-grid-list cols="2">
+<mat-grid-list cols="4" rowHeight="100%">
     <mat-grid-tile>
         <div class="container" *ngIf="curruser">
             <div>
@@ -26,7 +26,7 @@
             </button>
         </div>
     </mat-grid-tile>
-    <mat-grid-tile>
+    <mat-grid-tile [colspan]=3>
         <app-posts [id]="curruser.id"></app-posts>
     </mat-grid-tile>
 </mat-grid-list>

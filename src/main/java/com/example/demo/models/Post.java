@@ -24,7 +24,6 @@ public class Post {
     @Column(name = "id")
     private Long id;
 
-    @NotBlank
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -35,7 +34,7 @@ public class Post {
     @Column(updatable = false)
     private LocalDateTime creationDate;
 
-    public Post(@NotBlank String content, User user) {
+    public Post(String content, User user) {
         this.content = content;
         this.user = user;
     }

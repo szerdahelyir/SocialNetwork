@@ -1,8 +1,12 @@
 
-<mat-grid-list cols="2">
+<mat-grid-list cols="2" rowHeight="100%">
     <mat-grid-tile>
-
-<button mat-button (click)="asd()">asd </button>
+<form *ngIf="canPost" [formGroup]="form" (ngSubmit)="submit()">
+    <mat-form-field class="maxwidth">
+        <textarea matInput placeholder="Write your post here..." formControlName="content"></textarea>
+        <button mat-raised-button class="submit">Submit</button>
+    </mat-form-field>
+</form>
 <div 
 infiniteScroll
 [infiniteScrollDistance]="2"
@@ -30,9 +34,10 @@ class="infscroll"
             <button mat-button>{{p.creationDate}}</button>
             </mat-card-actions>
         </mat-card>
-
-    
     </div>
+</div>
+<div *ngIf="posts.length==0">
+    There are no available posts.
 </div>
     </mat-grid-tile>
     <mat-grid-tile *ngIf="currpostid">

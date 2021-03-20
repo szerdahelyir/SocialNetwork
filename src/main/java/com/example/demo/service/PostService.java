@@ -52,9 +52,36 @@ public class PostService {
         return responseDTOS;
     }
 
-    public List<Post> getPostsOfFriends() {
-        List<Long> friendIds = this.relationshipService.getFriendsIds();
-        return this.postRepository.findPostsByUserIds(friendIds);
+    public List<PostResponseDTO> getPostsOfUser(Long userId) {
+        List<Post> posts = postRepository.findAllByUserId(userId);
+
+        List<PostResponseDTO> responseDTOS = posts
+                .stream()
+                .map(p -> postMapper.toPostResponseDTO
+                        (p,
+                                userMapper.toUserDTO(p.getUser(), 2),
+                                commentRepository.findByPostId(p.getId()).size()
+                        )
+                )
+                .collect(Collectors.toList());
+        return responseDTOS;
+    }
+
+    public List<PostResponseDTO> getPostsOfFriends() {
+        List<Long> friendIds =relationshipService.getFriendsIds();
+        friendIds.add(AuthenticationUtil.getAuthenticatedUserId());
+        List<Post> posts = postRepository.findPostsByUserIds(friendIds);
+
+        List<PostResponseDTO> responseDTOS = posts
+                .stream()
+                .map(p -> postMapper.toPostResponseDTO
+                        (p,
+                                userMapper.toUserDTO(p.getUser(), 2),
+                                commentRepository.findByPostId(p.getId()).size()
+                        )
+                )
+                .collect(Collectors.toList());
+        return responseDTOS;
     }
 
     public void createPost(PostDTO postDTO) {

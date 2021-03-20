@@ -22,8 +22,13 @@ public class PostController {
     }
 
     @GetMapping("/friends")
-    public List<Post> getFriendsPosts() {
+    public List<PostResponseDTO> getFriendsPosts() {
         return this.postService.getPostsOfFriends();
+    }
+
+    @GetMapping("/{userId}")
+    public List<PostResponseDTO> getPostsOfUser(@PathVariable(value = "userId") Long userId) {
+        return this.postService.getPostsOfUser(userId);
     }
 
     @PostMapping()

@@ -1,0 +1,17 @@
+.infscroll{
+    overflow:scroll;
+    height:80%;
+}
+.posts{
+    margin:20px;
+}
+mat-card{
+    border-radius: 25px;
+}
+
+.submit{
+    float:right;
+}
+.maxwidth{
+    width:100%;
+}
