@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.dto.PostDTO;
 import com.example.demo.dto.PostResponseDTO;
+import com.example.demo.mapper.ImageMapper;
 import com.example.demo.mapper.PostMapper;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.models.Post;
@@ -36,6 +37,9 @@ public class PostService {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private ImageMapper imageMapper;
+
     public List<PostResponseDTO> getPostsOfCurrentUser() {
         Long id = AuthenticationUtil.getAuthenticatedUserId();
         List<Post> posts = postRepository.findAllByUserId(id);
@@ -44,7 +48,7 @@ public class PostService {
                 .stream()
                 .map(p -> postMapper.toPostResponseDTO
                         (p,
-                                userMapper.toUserDTO(p.getUser(), 4),
+                                userMapper.toUserDTO(p.getUser(), relationshipService.relationshipWithUser(p.getUser().getId()),imageMapper.toImageDTO(p.getUser().getProfilePicture())),
                                 commentRepository.findByPostId(p.getId()).size()
                         )
                 )
@@ -59,7 +63,7 @@ public class PostService {
                 .stream()
                 .map(p -> postMapper.toPostResponseDTO
                         (p,
-                                userMapper.toUserDTO(p.getUser(), 2),
+                                userMapper.toUserDTO(p.getUser(), relationshipService.relationshipWithUser(userId),imageMapper.toImageDTO(p.getUser().getProfilePicture())),
                                 commentRepository.findByPostId(p.getId()).size()
                         )
                 )
@@ -76,7 +80,7 @@ public class PostService {
                 .stream()
                 .map(p -> postMapper.toPostResponseDTO
                         (p,
-                                userMapper.toUserDTO(p.getUser(), 2),
+                                userMapper.toUserDTO(p.getUser(), 2,imageMapper.toImageDTO(p.getUser().getProfilePicture())),
                                 commentRepository.findByPostId(p.getId()).size()
                         )
                 )

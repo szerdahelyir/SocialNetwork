@@ -25,7 +25,7 @@ public class UserDTO {
 
     private LocalDateTime dob;
 
-    private Image profilePicture;
+    private ImageDTO profilePicture;
 
     private Integer relationship;
 }

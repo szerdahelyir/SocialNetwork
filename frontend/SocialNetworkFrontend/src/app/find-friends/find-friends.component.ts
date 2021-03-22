@@ -43,4 +43,18 @@ export class FindFriendsComponent implements OnInit {
     request['size'] = event.pageSize.toString();
     this.getUsers(request);
   }
+
+  add(id){
+    this.friendsService.addFriend(id).subscribe(data => {
+      console.log(data)
+    });
+    window.location.reload();
+  }
+
+  accept(id){
+    this.friendsService.acceptFriendRequest(id).subscribe(data => {
+      console.log(data)
+    });
+    window.location.reload();
+  }
 }

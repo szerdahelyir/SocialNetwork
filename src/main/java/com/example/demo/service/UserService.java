@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 
 import com.example.demo.dto.UserDTO;
+import com.example.demo.mapper.ImageMapper;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.models.User;
 import com.example.demo.repository.UserRepository;
@@ -26,13 +27,16 @@ public class UserService {
     @Autowired
     private RelationshipService relationshipService;
 
+    @Autowired
+    private ImageMapper imageMapper;
+
     public Page<UserDTO> getUsers(int page, int size) {
         Long id = AuthenticationUtil.getAuthenticatedUserId();
         PageRequest pageRequest = PageRequest.of(page, size);
         Page<User> pageResult = userRepository.findAll(id,pageRequest);
         List<UserDTO> users = pageResult
                 .stream()
-                .map(u->userMapper.toUserDTO(u,relationshipService.relationshipWithUser(u.getId())))
+                .map(u->userMapper.toUserDTO(u,relationshipService.relationshipWithUser(u.getId()),imageMapper.toImageDTO(u.getProfilePicture())))
                 .collect(Collectors.toList());
 
         return new PageImpl<>(users, pageRequest, pageResult.getTotalElements());
@@ -40,14 +44,15 @@ public class UserService {
     }
 
 
-    public User getUser(Long userId) {
+    public UserDTO getUser(Long userId) {
         boolean exists = userRepository.existsById(userId);
         if (!exists) {
             throw new IllegalStateException(
                     "user with id " + userId + " does not exist"
             );
         }
-        return userRepository.findUserById(userId);
+        User u = userRepository.findUserById(userId);
+        return userMapper.toUserDTO(u,this.relationshipService.relationshipWithUser(userId),imageMapper.toImageDTO(u.getProfilePicture()));
     }
 
     public void deleteUser(Long userId) {

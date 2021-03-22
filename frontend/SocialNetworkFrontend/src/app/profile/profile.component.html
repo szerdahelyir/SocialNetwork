@@ -2,12 +2,19 @@
     <mat-grid-tile>
         <div class="container" *ngIf="curruser">
             <div>
-            <div>
-                <ngx-avatar class="profilepic" *ngIf="!curruser.profilePicture" size="150" src="assets/avatar.png"></ngx-avatar>
-            </div>
-            <div>
-                <h2>{{curruser.firstName}} {{curruser.lastName}}</h2>
-            </div>
+                <div class="image-upload">
+                    <label for="file-input">
+                        <ngx-avatar class="profilepic" *ngIf="!curruser.profilePicture" size="150" src="assets/avatar.png"></ngx-avatar>
+                        <ngx-avatar class="profilepic" *ngIf="curruser.profilePicture" size="150" [src]="imgtemp"></ngx-avatar>
+                        
+                    </label>
+                    <input id="file-input" type="file" (change)="onFileChanged($event)" />
+                    <button (click)="asd()"></button>
+                </div>
+                <input type="button" (click)="onUpload()" value="upload">
+                <div>
+                    <h2>{{curruser.firstName}} {{curruser.lastName}}</h2>
+                </div>
             </div>
 
             <div>

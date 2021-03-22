@@ -35,7 +35,7 @@ public class UserController {
 
     @GetMapping(path = "{userId}")
     public UserDTO getUser(@PathVariable("userId") Long userId) {
-        return userMapper.toUserDTO(userService.getUser(userId),this.relationshipService.relationshipWithUser(userId));
+        return userService.getUser(userId);
     }
 
     @DeleteMapping(path = "{userId}")

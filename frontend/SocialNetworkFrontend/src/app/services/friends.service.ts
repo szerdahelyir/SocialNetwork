@@ -15,14 +15,18 @@ export class FriendsService {
 
   constructor(private http:HttpClient) { }
 
-  addFriend(credentials): Observable<any> {
-    return this.http.post(FRIENDS_API + 'add', {
-      id: credentials.id
-    },httpOptions);
+  addFriend(id): Observable<any> {
+    return this.http.post(FRIENDS_API + 'add/' + id , null);
   }
 
   getFriends(request){
     const params=request;
     return this.http.get(FRIENDS_API + 'friends',{params});
   }
+
+  acceptFriendRequest(id):Observable<any>{
+    return this.http.put(FRIENDS_API + 'accept/' + id,null);
+  }
+
+
 }

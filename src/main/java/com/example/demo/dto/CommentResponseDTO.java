@@ -11,10 +11,9 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostResponseDTO {
+public class CommentResponseDTO {
     private Long id;
-    private String content;
-    private Integer commentCount;
+    private String comment;
     private UserDTO userDTO;
     private LocalDateTime creationDate;
 }

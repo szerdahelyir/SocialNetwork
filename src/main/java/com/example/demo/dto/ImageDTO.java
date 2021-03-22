@@ -5,16 +5,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostResponseDTO {
+public class ImageDTO {
     private Long id;
-    private String content;
-    private Integer commentCount;
-    private UserDTO userDTO;
-    private LocalDateTime creationDate;
+    private String type;
+    private byte[] picByte;
 }

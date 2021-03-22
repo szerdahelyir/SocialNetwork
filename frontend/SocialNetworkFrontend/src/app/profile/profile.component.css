@@ -2,3 +2,10 @@
     margin-top:20px;
     margin-left:20px;
 }
+
+.image-upload>input {
+    display: none;
+  }
+.profilepic{
+    cursor:pointer;
+}
