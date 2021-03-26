@@ -24,4 +24,9 @@ public class Chat {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_two_id", nullable = false)
     private User user2;
+
+    public Chat(User user, User user2) {
+        this.user = user;
+        this.user2 = user2;
+    }
 }

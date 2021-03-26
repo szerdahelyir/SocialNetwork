@@ -7,39 +7,27 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "chat_messages")
+@Table(name = "chat_notifications")
 @EntityListeners(AuditingEntityListener.class)
-public class ChatMessage {
+public class ChatNotification {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 
-    @NotBlank
-    private String message;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "chat_id", nullable = false)
-    private Chat chat;
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "sender_id", nullable = false)
-    private User sender;
+    private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "receiver_id", nullable = false)
-    private User receiver;
+    private Long messageId;
 
     @CreatedDate
     @Column(updatable = false)
     private LocalDateTime creationDate;
-
-    private MessageStatus status;
 }

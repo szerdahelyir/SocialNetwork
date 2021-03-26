@@ -2,8 +2,10 @@ package com.example.demo.service;
 
 import com.example.demo.dto.UserDTO;
 import com.example.demo.mapper.UserMapper;
+import com.example.demo.models.Chat;
 import com.example.demo.models.Relationship;
 import com.example.demo.models.User;
+import com.example.demo.repository.ChatRepository;
 import com.example.demo.repository.RelationshipRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.util.AuthenticationUtil;
@@ -26,6 +28,9 @@ public class RelationshipService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private ChatRepository chatRepository;
 
     private User selectUserWithLowerId(User user, User otherUser) {
         return user.getId() < otherUser.getId() ? user : otherUser;
@@ -59,6 +64,10 @@ public class RelationshipService {
         relationship.setStatus(1);
         relationship.setActionUser(actionUser);
         relationshipRepository.save(relationship);
+        User user1 = userRepository.findUserById(AuthenticationUtil.getAuthenticatedUserId());
+        User user2 = userRepository.findUserById(userId);
+        Chat chat=new Chat(selectUserWithLowerId(user1, user2), selectUserWithHigherId(user1, user2));
+        chatRepository.save(chat);
     }
 
     public void declineFriendRequest(Long userId) {
