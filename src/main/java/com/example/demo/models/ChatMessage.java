@@ -42,4 +42,11 @@ public class ChatMessage {
     private LocalDateTime creationDate;
 
     private MessageStatus status;
+
+    public ChatMessage(@NotBlank String message, Chat chat, User sender, User receiver) {
+        this.message = message;
+        this.chat = chat;
+        this.sender = sender;
+        this.receiver = receiver;
+    }
 }

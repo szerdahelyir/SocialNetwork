@@ -1,6 +1,5 @@
-package com.example.demo.models;
+package com.example.demo.dto;
 
-import com.example.demo.dto.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +9,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ChatNotification {
-    private UserDTO user;
-    private Long messageId;
+public class MessageRequestDTO {
+    private Long senderId;
+    private Long recipientId;
+    private String message;
 }

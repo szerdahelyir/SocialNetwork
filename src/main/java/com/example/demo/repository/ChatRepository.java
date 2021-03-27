@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ChatRepository extends JpaRepository<Chat, Long> {
-    @Query("SELECT c FROM Chat c WHERE c.user.id = :user1id AND c.user2.id = :user2id")
+    @Query("SELECT c FROM Chat c JOIN FETCH c.user JOIN FETCH c.user2 WHERE c.user.id = :user1id AND c.user2.id = :user2id")
     Chat findChat(@Param("user1id") Long user1id, @Param("user2id") Long user2id);
 }
