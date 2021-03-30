@@ -15,4 +15,8 @@ export class ChatComponent implements OnInit {
   connect(){
     this.messageService.connect();
   }
+
+  sendMessage(){
+    this.messageService.sendMessage();
+  }
 }

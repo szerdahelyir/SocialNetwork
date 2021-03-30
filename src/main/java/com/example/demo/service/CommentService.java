@@ -42,6 +42,9 @@ public class CommentService {
     @Autowired
     private ImageMapper imageMapper;
 
+    @Autowired
+    private ImageService imageService;
+
     public List<CommentResponseDTO> getCommentsOfPost(Long postId){
         List<Comment> comments = commentRepository.findByPostId(postId);
 
@@ -49,7 +52,7 @@ public class CommentService {
                 .stream()
                 .map(c -> commentMapper.toCommentResponseDTO
                         (c,
-                                userMapper.toUserDTO(c.getUser(), relationshipService.relationshipWithUser(c.getUser().getId()),imageMapper.toImageDTO(c.getUser().getProfilePicture()))
+                                userMapper.toUserDTO(c.getUser(), relationshipService.relationshipWithUser(c.getUser().getId()),imageMapper.toImageDTO(c.getUser().getProfilePicture(),imageService.decompressBytes(c.getUser().getProfilePicture().getPicByte())))
                         )
                 )
                 .collect(Collectors.toList());

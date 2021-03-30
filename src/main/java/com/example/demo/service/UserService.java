@@ -30,13 +30,16 @@ public class UserService {
     @Autowired
     private ImageMapper imageMapper;
 
+    @Autowired
+    private ImageService imageService;
+
     public Page<UserDTO> getUsers(int page, int size) {
         Long id = AuthenticationUtil.getAuthenticatedUserId();
         PageRequest pageRequest = PageRequest.of(page, size);
         Page<User> pageResult = userRepository.findAll(id,pageRequest);
         List<UserDTO> users = pageResult
                 .stream()
-                .map(u->userMapper.toUserDTO(u,relationshipService.relationshipWithUser(u.getId()),imageMapper.toImageDTO(u.getProfilePicture())))
+                .map(u->userMapper.toUserDTO(u,relationshipService.relationshipWithUser(u.getId()),imageMapper.toImageDTO(u.getProfilePicture(),imageService.decompressBytes(u.getProfilePicture().getPicByte()))))
                 .collect(Collectors.toList());
 
         return new PageImpl<>(users, pageRequest, pageResult.getTotalElements());
@@ -52,7 +55,7 @@ public class UserService {
             );
         }
         User u = userRepository.findUserById(userId);
-        return userMapper.toUserDTO(u,this.relationshipService.relationshipWithUser(userId),imageMapper.toImageDTO(u.getProfilePicture()));
+        return userMapper.toUserDTO(u,this.relationshipService.relationshipWithUser(userId),imageMapper.toImageDTO(u.getProfilePicture(),imageService.decompressBytes(u.getProfilePicture().getPicByte())));
     }
 
     public void deleteUser(Long userId) {

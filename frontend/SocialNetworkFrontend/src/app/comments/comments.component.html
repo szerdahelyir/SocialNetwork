@@ -12,6 +12,7 @@ class="infscroll"
             <mat-card-header>
                 <div mat-card-avatar class="example-header-image">
                 <ngx-avatar class="profilepic" *ngIf="!c.userDTO.profilePicture" size="50" src="assets/avatar.png"></ngx-avatar>
+                <ngx-avatar class="profilepic" *ngIf="c.userDTO.profilePicture" size="50" [src]="c.userDTO.profilePicture.picByte"></ngx-avatar>
                 </div>
             <mat-card-title>{{c.userDTO.firstName}} {{c.userDTO.lastName}}</mat-card-title>
             <mat-card-subtitle>{{c.userDTO.location}}</mat-card-subtitle>

@@ -40,6 +40,9 @@ public class PostService {
     @Autowired
     private ImageMapper imageMapper;
 
+    @Autowired
+    private ImageService imageService;
+
     public List<PostResponseDTO> getPostsOfCurrentUser() {
         Long id = AuthenticationUtil.getAuthenticatedUserId();
         List<Post> posts = postRepository.findAllByUserId(id);
@@ -48,7 +51,8 @@ public class PostService {
                 .stream()
                 .map(p -> postMapper.toPostResponseDTO
                         (p,
-                                userMapper.toUserDTO(p.getUser(), relationshipService.relationshipWithUser(p.getUser().getId()),imageMapper.toImageDTO(p.getUser().getProfilePicture())),
+                                userMapper.toUserDTO(p.getUser(), relationshipService.relationshipWithUser(p.getUser().getId()),imageMapper.toImageDTO(p.getUser().getProfilePicture(),
+                                        imageService.decompressBytes(p.getUser().getProfilePicture().getPicByte()))),
                                 commentRepository.findByPostId(p.getId()).size()
                         )
                 )
@@ -63,7 +67,7 @@ public class PostService {
                 .stream()
                 .map(p -> postMapper.toPostResponseDTO
                         (p,
-                                userMapper.toUserDTO(p.getUser(), relationshipService.relationshipWithUser(userId),imageMapper.toImageDTO(p.getUser().getProfilePicture())),
+                                userMapper.toUserDTO(p.getUser(), relationshipService.relationshipWithUser(userId),imageMapper.toImageDTO(p.getUser().getProfilePicture(),imageService.decompressBytes(p.getUser().getProfilePicture().getPicByte()))),
                                 commentRepository.findByPostId(p.getId()).size()
                         )
                 )
@@ -80,7 +84,7 @@ public class PostService {
                 .stream()
                 .map(p -> postMapper.toPostResponseDTO
                         (p,
-                                userMapper.toUserDTO(p.getUser(), 2,imageMapper.toImageDTO(p.getUser().getProfilePicture())),
+                                userMapper.toUserDTO(p.getUser(), 2,imageMapper.toImageDTO(p.getUser().getProfilePicture(),imageService.decompressBytes(p.getUser().getProfilePicture().getPicByte()))),
                                 commentRepository.findByPostId(p.getId()).size()
                         )
                 )

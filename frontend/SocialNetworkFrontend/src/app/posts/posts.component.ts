@@ -1,7 +1,10 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ImageService } from '../services/image.service';
 import { PostService } from '../services/post.service';
 import { TokenService } from '../services/token.service';
+import { map } from "rxjs/operators"; 
 
 @Component({
   selector: 'app-posts',
@@ -16,10 +19,13 @@ export class PostsComponent implements OnInit {
   form: FormGroup = new FormGroup({});
   canPost:boolean=true;
   postFlag:boolean=true;
+  map = new Map<string, string>();
 
   constructor(private postService:PostService,
               private fb:FormBuilder,
-              private token: TokenService) { }
+              private token: TokenService,
+              private http:HttpClient,
+              private imageService:ImageService) { }
 
   ngOnInit(): void {
     if(this.token.getUser().id==this.id){
@@ -41,6 +47,7 @@ export class PostsComponent implements OnInit {
     this.postService.getMyPosts()
       .subscribe((data:any) => {
         this.originalposts = data;
+        console.log(data);
         this.posts = data.slice(0,10);
       }, error => {
         console.log(error);
@@ -68,7 +75,11 @@ export class PostsComponent implements OnInit {
   }
   
   asd(){
-    console.log(this.posts)
+    console.log(this.originalposts);
+    this.http.get('http://localhost:8080/api/posts/myposts').subscribe(data=>{
+      console.log(data);
+    });
+    
   }
 
   onScrollDown(){
@@ -97,5 +108,14 @@ export class PostsComponent implements OnInit {
 
   setPostId(id){
     this.currpostid=id;
+  }
+
+  getImg(id){
+    return this.http.get('http://localhost:8080/api/images/get/' + id).subscribe((data)=>{
+      const asdd : any = data;
+      return 'data:image/jpeg;base64,' + asdd.picByte;
+    }
+    )
+    
   }
 }

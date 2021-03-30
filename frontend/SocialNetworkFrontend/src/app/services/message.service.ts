@@ -34,14 +34,30 @@ export class MessageService {
 
   onConnected = () => {
     console.log("connected");
+    console.log("connected");
+    console.log("connected");
+    console.log("connected");
     console.log(this.currentUser);
     this.ws.subscribe(
       "/user/" + this.curruser.id + "/queue/messages",
-      console.log("asd")
+      this.onMessageReceived
     );
   };
 
   onError = (err) => {
     console.log(err);
   };
+
+  onMessageReceived(msg){
+    console.log(msg);
+  }
+
+  sendMessage(){
+    const message = {
+      senderId: this.curruser.id,
+      recipientId: 1,
+      message: "asdasd",
+    };
+    this.ws.send("/app/chat", {}, JSON.stringify(message));
+}
 }

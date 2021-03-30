@@ -1,4 +1,5 @@
 
+<button (click)="asd()">asd</button>
 <mat-grid-list cols="2" rowHeight="100%">
     <mat-grid-tile>
 <form *ngIf="canPost" [formGroup]="form" (ngSubmit)="submit()">
@@ -20,6 +21,7 @@ class="infscroll"
             <mat-card-header>
                 <div mat-card-avatar class="example-header-image">
                 <ngx-avatar class="profilepic" *ngIf="!p.userDTO.profilePicture" size="50" src="assets/avatar.png"></ngx-avatar>
+                <ngx-avatar class="profilepic" *ngIf="p.userDTO.profilePicture" size="50" [src]="p.userDTO.profilePicture.picByte"></ngx-avatar>
                 </div>
             <mat-card-title>{{p.userDTO.firstName}} {{p.userDTO.lastName}}</mat-card-title>
             <mat-card-subtitle>{{p.userDTO.location}}</mat-card-subtitle>

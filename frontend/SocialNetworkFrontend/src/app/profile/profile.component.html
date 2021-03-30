@@ -5,7 +5,7 @@
                 <div class="image-upload">
                     <label for="file-input">
                         <ngx-avatar class="profilepic" *ngIf="!curruser.profilePicture" size="150" src="assets/avatar.png"></ngx-avatar>
-                        <ngx-avatar class="profilepic" *ngIf="curruser.profilePicture" size="150" [src]="imgtemp"></ngx-avatar>
+                        <ngx-avatar class="profilepic" *ngIf="curruser.profilePicture" size="150" [src]="teszt"></ngx-avatar>
                         
                     </label>
                     <input id="file-input" type="file" (change)="onFileChanged($event)" />

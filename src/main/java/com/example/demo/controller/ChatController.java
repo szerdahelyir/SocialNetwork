@@ -11,6 +11,7 @@ import com.example.demo.repository.ChatMessageRepository;
 import com.example.demo.repository.ChatRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.ChatMessageService;
+import com.example.demo.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -44,6 +45,9 @@ public class ChatController {
     @Autowired
     private ImageMapper imageMapper;
 
+    @Autowired
+    private ImageService imageService;
+
     @MessageMapping("/chat")
     public void processMessage(@Payload MessageRequestDTO chatMessage) {
         Chat chat = chatRepository.findChat(chatMessage.getSenderId() < chatMessage.getRecipientId() ? chatMessage.getSenderId() : chatMessage.getRecipientId(),
@@ -59,7 +63,9 @@ public class ChatController {
         messagingTemplate.convertAndSendToUser(
                 chatMessage.getRecipientId().toString(),"/queue/messages",
                 new ChatNotification(
-                        userMapper.toUserDTO(saved.getSender(),2,imageMapper.toImageDTO(saved.getSender().getProfilePicture())),
+                        userMapper.toUserDTO(saved.getSender(),2,
+                                imageMapper.toImageDTO(saved.getSender().getProfilePicture(),
+                                imageService.decompressBytes(saved.getSender().getProfilePicture().getPicByte()))),
                         saved.getId()
                 )
         );

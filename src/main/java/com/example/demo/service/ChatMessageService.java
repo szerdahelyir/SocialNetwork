@@ -35,6 +35,9 @@ public class ChatMessageService {
     @Autowired
     private ImageMapper imageMapper;
 
+    @Autowired
+    private ImageService imageService;
+
     public long countNewMessages(Long senderId, Long recipientId) {
         return chatMessageRepository.countBySenderIdAndRecipientIdAndStatus(
                 senderId, recipientId, MessageStatus.RECEIVED);
@@ -56,8 +59,8 @@ public class ChatMessageService {
                 .stream()
                 .map(message -> chatMessageMapper.toChatMessageDTO
                         (message,
-                                userMapper.toUserDTO(message.getSender(),2, imageMapper.toImageDTO(message.getSender().getProfilePicture())),
-                                userMapper.toUserDTO(message.getReceiver(),2, imageMapper.toImageDTO(message.getReceiver().getProfilePicture()))
+                                userMapper.toUserDTO(message.getSender(),2, imageMapper.toImageDTO(message.getSender().getProfilePicture(),imageService.decompressBytes(message.getSender().getProfilePicture().getPicByte()))),
+                                userMapper.toUserDTO(message.getReceiver(),2, imageMapper.toImageDTO(message.getReceiver().getProfilePicture(),imageService.decompressBytes(message.getSender().getProfilePicture().getPicByte())))
                         )
                 )
                 .collect(Collectors.toList());
