@@ -20,17 +20,12 @@ export class ProfileComponent implements OnInit {
 
   constructor(private token: TokenService,
     private userService: UserService,
-    private http: HttpClient,
-    private imageService:ImageService) { }
+    private http: HttpClient,) { }
 
   ngOnInit(): void {
     this.currentUser = this.token.getUser();
     this.userService.getUser(this.currentUser.id).subscribe((data: any) => {
       this.curruser = data;
-      this.imageService.getImg(this.curruser.profilePicture.id).subscribe(data=>{
-        console.log(data);
-        this.teszt=data});
-      console.log(this.curruser);
     });
     
 
@@ -63,16 +58,5 @@ export class ProfileComponent implements OnInit {
         }
       }
       );
-  }
-
-  getImg(id) {
-    return this.http.get('http://localhost:8080/api/images/get/' + id).subscribe((data) => {
-      const asdd: any = data;
-      return 'data:image/jpeg;base64,' + asdd.picByte;
-      }
-    )
-  }
-
-  
-
+  }  
 }

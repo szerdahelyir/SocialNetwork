@@ -39,7 +39,12 @@ public class UserService {
         Page<User> pageResult = userRepository.findAll(id,pageRequest);
         List<UserDTO> users = pageResult
                 .stream()
-                .map(u->userMapper.toUserDTO(u,relationshipService.relationshipWithUser(u.getId()),imageMapper.toImageDTO(u.getProfilePicture(),imageService.decompressBytes(u.getProfilePicture().getPicByte()))))
+                .map(u->{
+                    if(u.getProfilePicture()==null){
+                        return userMapper.toUserDTO(u,relationshipService.relationshipWithUser(u.getId()),null);
+                    }
+                    return userMapper.toUserDTO(u,relationshipService.relationshipWithUser(u.getId()),imageMapper.toImageDTO(u.getProfilePicture(),imageService.decompressBytes(u.getProfilePicture().getPicByte())));
+                })
                 .collect(Collectors.toList());
 
         return new PageImpl<>(users, pageRequest, pageResult.getTotalElements());
@@ -55,6 +60,9 @@ public class UserService {
             );
         }
         User u = userRepository.findUserById(userId);
+        if(u.getProfilePicture()==null){
+            return userMapper.toUserDTO(u,this.relationshipService.relationshipWithUser(userId),null);
+        }
         return userMapper.toUserDTO(u,this.relationshipService.relationshipWithUser(userId),imageMapper.toImageDTO(u.getProfilePicture(),imageService.decompressBytes(u.getProfilePicture().getPicByte())));
     }
 

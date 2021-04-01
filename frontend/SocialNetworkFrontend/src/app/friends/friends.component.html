@@ -1,9 +1,11 @@
+<button (click)="asd()">asdasd</button>
 <div>
     <table class="mat-table" >
         <mat-card *ngFor="let user of users" class="maxwidth">
             <mat-card-header>
                 <div mat-card-avatar class="example-header-image">
                   <ngx-avatar class="profilepic" *ngIf="!user.profilePicture" size="50" src="assets/avatar.png"></ngx-avatar>
+                  <ngx-avatar class="profilepic" *ngIf="user.profilePicture" size="50" [src]=user.profilePicture.picByte></ngx-avatar>
                 </div>
               <mat-card-title>{{user.firstName}} {{user.lastName}}</mat-card-title>
               <mat-card-subtitle>{{user.location}}</mat-card-subtitle>

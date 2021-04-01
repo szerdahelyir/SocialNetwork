@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.UserDTO;
+import com.example.demo.mapper.ImageMapper;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.models.Chat;
 import com.example.demo.models.Relationship;
@@ -31,6 +32,12 @@ public class RelationshipService {
 
     @Autowired
     private ChatRepository chatRepository;
+
+    @Autowired
+    private ImageMapper imageMapper;
+
+    @Autowired
+    private ImageService imageService;
 
     private User selectUserWithLowerId(User user, User otherUser) {
         return user.getId() < otherUser.getId() ? user : otherUser;
@@ -83,11 +90,19 @@ public class RelationshipService {
         Long currentId = AuthenticationUtil.getAuthenticatedUserId();
         PageRequest pageRequest = PageRequest.of(page, size);
         Page<Relationship> relationships = relationshipRepository.findFriends(currentId, 1,pageRequest);
-        List<User> friends = relationships.stream()
-                .map(r -> r.getUser().getId().equals(AuthenticationUtil.getAuthenticatedUserId()) ? r.getUser2() : r.getUser())
+        List<UserDTO> friends = relationships.stream()
+                .map(r ->{
+                    User toreturn = r.getUser().getId().equals(AuthenticationUtil.getAuthenticatedUserId()) ? r.getUser2() : r.getUser();
+
+                    if(toreturn.getProfilePicture()==null){
+                        return userMapper.toUserDTO(toreturn,relationshipWithUser(toreturn.getId()),imageMapper.toImageDTO(toreturn.getProfilePicture(),null));
+                    }
+                    return userMapper.toUserDTO(toreturn,relationshipWithUser(toreturn.getId()),imageMapper.toImageDTO(toreturn.getProfilePicture(),imageService.decompressBytes(toreturn.getProfilePicture().getPicByte())));
+
+                })
                 .collect(Collectors.toList());
-        List<UserDTO> UserDTOfriends = this.userMapper.toUserDTOs(friends);
-        return new PageImpl<>(UserDTOfriends, pageRequest, relationships.getTotalElements());
+        //List<UserDTO> UserDTOfriends = this.userMapper.toUserDTOs(friends);
+        return new PageImpl<>(friends, pageRequest, relationships.getTotalElements());
     }
 
     public List<Long> getFriendsIds(){

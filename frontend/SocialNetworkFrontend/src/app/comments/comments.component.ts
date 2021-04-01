@@ -60,8 +60,9 @@ export class CommentsComponent implements OnInit {
     console.log(this.form.value);
     this.postService.addComment(this.form.value,this.postId).subscribe(data => {
       console.log(data)
+      this.getComments();
     });
-    this.getComments();
+    
   }
 
 }

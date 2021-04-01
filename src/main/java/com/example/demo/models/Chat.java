@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -24,6 +25,8 @@ public class Chat {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_two_id", nullable = false)
     private User user2;
+
+    private LocalDateTime lastMessage;
 
     public Chat(User user, User user2) {
         this.user = user;

@@ -25,11 +25,16 @@ export class FriendsComponent implements OnInit {
   private getFriends(request) {
     this.friendsService.getFriends(request)
       .subscribe(data => {
+        console.log(data);
         this.users = data['content'];
         this.totalElements = data['totalElements'];
       }, error => {
         console.log(error);
       });
+  }
+  asd(){
+    console.log("asd");
+    console.log(this.users);
   }
 
   viewProfile(id){

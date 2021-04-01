@@ -4,6 +4,7 @@
             <div>
               <div>
                   <ngx-avatar class="profilepic" *ngIf="!user.profilePicture" size="150" src="assets/avatar.png"></ngx-avatar>
+                  <ngx-avatar class="profilepic" *ngIf="user.profilePicture" size="150" [src]=user.profilePicture.picByte></ngx-avatar>
               </div>
               <div class="name">
                   <h2>{{user.firstName}} {{user.lastName}} </h2>

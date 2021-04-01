@@ -26,7 +26,7 @@ class="infscroll"
         </mat-card>
     </div>
 </div>
-<form [formGroup]="form" (ngSubmit)="submit()">
+<form [formGroup]="form" (click)="submit()">
     <mat-form-field class="maxwidth">
         <textarea matInput placeholder="Write your comment here..." formControlName="content"></textarea>
         <button mat-raised-button class="submit">Submit</button>
