@@ -1,4 +1,10 @@
 <div>
+  <form action="" class="search-bar">
+    <input type="search" name="search" pattern=".*\S.*" required>
+    <button class="search-btn" type="submit">
+        <span>Search</span>
+    </button>
+</form>
     <table class="mat-table" >
         <mat-card *ngFor="let user of users" class="maxwidth">
             <mat-card-header>

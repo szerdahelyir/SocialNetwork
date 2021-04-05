@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.ChatDTO;
 import com.example.demo.dto.MessageRequestDTO;
 import com.example.demo.mapper.ImageMapper;
 import com.example.demo.mapper.UserMapper;
@@ -22,7 +23,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class ChatController {
     @Autowired
     private ChatMessageService chatMessageService;
@@ -53,21 +57,21 @@ public class ChatController {
         Chat chat = chatRepository.findChat(chatMessage.getSenderId() < chatMessage.getRecipientId() ? chatMessage.getSenderId() : chatMessage.getRecipientId(),
                 chatMessage.getSenderId() > chatMessage.getRecipientId() ? chatMessage.getSenderId() : chatMessage.getRecipientId());
 
-        User sender=userRepository.findUserById(chatMessage.getSenderId());
-        User recipient=userRepository.findUserById(chatMessage.getRecipientId());
+        User sender = userRepository.findUserById(chatMessage.getSenderId());
+        User recipient = userRepository.findUserById(chatMessage.getRecipientId());
 
-        ChatMessage message=new ChatMessage(chatMessage.getMessage(),chat,sender,recipient);
+        ChatMessage message = new ChatMessage(chatMessage.getMessage(), chat, sender, recipient);
 
-        ChatMessage saved=chatMessageService.save(message);
+        ChatMessage saved = chatMessageService.save(message);
         chat.setLastMessage(saved.getCreationDate());
         chatRepository.save(chat);
 
         messagingTemplate.convertAndSendToUser(
-                chatMessage.getRecipientId().toString(),"/queue/messages",
+                chatMessage.getRecipientId().toString(), "/queue/messages",
                 new ChatNotification(
-                        userMapper.toUserDTO(saved.getSender(),2,
+                        userMapper.toUserDTO(saved.getSender(), 2,
                                 imageMapper.toImageDTO(saved.getSender().getProfilePicture(),
-                                imageService.decompressBytes(saved.getSender().getProfilePicture().getPicByte()))),
+                                        imageService.decompressBytes(saved.getSender().getProfilePicture().getPicByte()))),
                         saved.getId()
                 )
         );
@@ -83,15 +87,20 @@ public class ChatController {
     }
 
     @GetMapping("/messages/{senderId}/{recipientId}")
-    public ResponseEntity<?> findChatMessages ( @PathVariable Long senderId,
-                                                @PathVariable Long recipientId) {
+    public ResponseEntity<?> findChatMessages(@PathVariable Long senderId,
+                                              @PathVariable Long recipientId) {
         return ResponseEntity
                 .ok(chatMessageService.findChatMessages(senderId, recipientId));
     }
 
     @GetMapping("/messages/{id}")
-    public ResponseEntity<?> findMessage ( @PathVariable Long id) {
+    public ResponseEntity<?> findMessage(@PathVariable Long id) {
         return ResponseEntity
                 .ok(chatMessageService.findById(id));
+    }
+
+    @GetMapping("/chats")
+    public List<ChatDTO> findChats() {
+        return chatMessageService.findChats();
     }
 }

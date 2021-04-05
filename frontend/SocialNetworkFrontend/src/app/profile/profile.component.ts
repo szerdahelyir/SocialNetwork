@@ -16,29 +16,28 @@ export class ProfileComponent implements OnInit {
   curruser: any;
   selectedFile: File;
   message: string;
-  teszt:any;
+  teszt: any;
 
   constructor(private token: TokenService,
     private userService: UserService,
-    private http: HttpClient,) { }
+    private http: HttpClient) { }
 
   ngOnInit(): void {
     this.currentUser = this.token.getUser();
+    this.getUser();
+  }
+
+  getUser() {
     this.userService.getUser(this.currentUser.id).subscribe((data: any) => {
       this.curruser = data;
     });
-    
-
-  }
-
-  asd() {
-    console.log(this.teszt);
   }
 
   //Gets called when the user selects an image
   public onFileChanged(event) {
     //Select File
     this.selectedFile = event.target.files[0];
+    this.onUpload();
   }
   //Gets called when the user clicks on submit to upload the image
   onUpload() {
@@ -58,5 +57,6 @@ export class ProfileComponent implements OnInit {
         }
       }
       );
-  }  
+    window.location.reload();
+  }
 }

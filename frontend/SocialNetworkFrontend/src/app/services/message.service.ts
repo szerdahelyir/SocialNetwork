@@ -1,8 +1,10 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {SockJS} from 'sockjs-client';
 import {Stomp} from 'stompjs';
 import { TokenService } from './token.service';
 import { UserService } from './user.service';
+import { map } from "rxjs/operators"; 
 
 declare var SockJS;
 declare var Stomp;
@@ -17,7 +19,8 @@ export class MessageService {
   curruser: any;
 
   constructor(private token: TokenService,
-    private userService: UserService,) { 
+    private userService: UserService,
+    private http:HttpClient) { 
       this.currentUser = this.token.getUser();
       this.userService.getUser(this.currentUser.id).subscribe((data: any)=>{
       this.curruser=data;
@@ -55,9 +58,33 @@ export class MessageService {
   sendMessage(){
     const message = {
       senderId: this.curruser.id,
-      recipientId: 1,
+      recipientId: 5,
       message: "asdasd",
     };
     this.ws.send("/app/chat", {}, JSON.stringify(message));
 }
+  getChats(){
+    return this.http.get('http://localhost:8080/chats').pipe(map((x : any)=> {
+      for(let i of x){
+        if (i.receiver.profilePicture) {
+          i.receiver.profilePicture.picByte = 'data:image/jpeg;base64,' + i.receiver.profilePicture.picByte;
+        }
+      } 
+      return x;
+    }))
+  }
+
+  getMessages(sender,recipient){
+    return this.http.get('http://localhost:8080/messages/' + sender + '/' + recipient).pipe(map((x : any)=> {
+      for(let i of x){
+        if(i.sender.profilePicture){
+          i.sender.profilePicture.picByte = 'data:image/jpeg;base64,' + i.sender.profilePicture.picByte;
+        }
+        if (i.receiver.profilePicture) {
+          i.receiver.profilePicture.picByte = 'data:image/jpeg;base64,' + i.receiver.profilePicture.picByte;
+        }
+      } 
+      return x;
+    }))
+  }
 }

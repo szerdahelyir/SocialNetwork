@@ -1,3 +1,31 @@
-<p>chat works!</p>
-<button (click)="connect()">asdasdasd</button>
-<button (click)="sendMessage()">send</button>
+<div class="container">
+    <mat-grid-list cols="4" rowHeight="100%">
+        <mat-grid-tile [colspan]=1>
+            <p>chat works!</p>
+            <button (click)="connect()">asdasdasd</button>
+            <button (click)="sendMessage()">send</button>
+            <div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50" [scrollWindow]="false"
+                (scrolled)="onScrollDown()" class="infscroll">
+                <div *ngFor="let c of chats" class="chats">
+                    <mat-card class="example-card" (click)="setId(c.receiver.id)">
+                        <mat-card-header>
+                            <div mat-card-avatar class="example-header-image">
+                                <ngx-avatar class="profilepic" *ngIf="!c.receiver.profilePicture" size="50"
+                                    src="assets/avatar.png"></ngx-avatar>
+                                <ngx-avatar class="profilepic" *ngIf="c.receiver.profilePicture" size="50"
+                                    [src]="c.receiver.profilePicture.picByte"></ngx-avatar>
+                            </div>
+                            <mat-card-title>{{c.receiver.firstName}} {{c.receiver.lastName}}</mat-card-title>
+                            <mat-card-subtitle>{{c.receiver.location}}</mat-card-subtitle>
+                        </mat-card-header>
+                        <mat-card-actions>
+                        </mat-card-actions>
+                    </mat-card>
+                </div>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]=3>
+            <app-privatechat [id]="currId"></app-privatechat>
+        </mat-grid-tile>
+    </mat-grid-list>
+</div>

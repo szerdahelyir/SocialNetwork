@@ -1,0 +1,38 @@
+<div class="infscroll">
+    <div *ngFor="let m of messages" class="chats">
+        <mat-card class="example-card">
+            <div *ngIf="m.sender.id==currentUserId">
+                <mat-card-header class="jobb">
+                    <div mat-card-avatar class="example-header-image">
+                        <ngx-avatar class="profilepic" *ngIf="!m.sender.profilePicture" size="50"
+                            src="assets/avatar.png">
+                        </ngx-avatar>
+                        <ngx-avatar class="profilepic" *ngIf="m.sender.profilePicture" size="50"
+                            [src]="m.sender.profilePicture.picByte"></ngx-avatar>
+                    </div>
+                    <mat-card-title>{{m.sender.firstName}} {{m.sender.lastName}}</mat-card-title>
+                    <mat-card-content>
+                        <p>{{m.message}}</p>
+                    </mat-card-content>
+                    <mat-card-subtitle>{{m.creationDate}}</mat-card-subtitle>
+                </mat-card-header>
+            </div>
+            <div *ngIf="m.sender.id==id">
+                <mat-card-header class="bal">
+                    <div mat-card-avatar class="example-header-image">
+                        <ngx-avatar class="profilepic" *ngIf="!m.sender.profilePicture" size="50"
+                            src="assets/avatar.png">
+                        </ngx-avatar>
+                        <ngx-avatar class="profilepic" *ngIf="m.sender.profilePicture" size="50"
+                            [src]="m.sender.profilePicture.picByte"></ngx-avatar>
+                    </div>
+                    <mat-card-title>{{m.sender.firstName}} {{m.sender.lastName}}</mat-card-title>
+                    <mat-card-content>
+                        <p>{{m.message}}</p>
+                    </mat-card-content>
+                    <mat-card-subtitle>{{m.creationDate}}</mat-card-subtitle>
+                </mat-card-header>
+            </div>
+        </mat-card>
+    </div>
+</div>

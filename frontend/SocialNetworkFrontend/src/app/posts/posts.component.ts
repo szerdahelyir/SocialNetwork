@@ -109,13 +109,4 @@ export class PostsComponent implements OnInit {
   setPostId(id){
     this.currpostid=id;
   }
-
-  getImg(id){
-    return this.http.get('http://localhost:8080/api/images/get/' + id).subscribe((data)=>{
-      const asdd : any = data;
-      return 'data:image/jpeg;base64,' + asdd.picByte;
-    }
-    )
-    
-  }
 }

@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from "rxjs/operators"; 
+import { map } from "rxjs/operators";
 
 const POSTS_API = 'http://localhost:8080/api/posts/';
 const COMMENT_API = "http://localhost:8080/api/comments/"
@@ -15,53 +15,61 @@ const httpOptions = {
 })
 export class PostService {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  getMyPosts(){
-    return this.http.get(POSTS_API + 'myposts').pipe(map((x : any)=> {
-      for(let i of x){
-        i.userDTO.profilePicture.picByte='data:image/jpeg;base64,' + i.userDTO.profilePicture.picByte;
-      } 
+  getMyPosts() {
+    return this.http.get(POSTS_API + 'myposts').pipe(map((x: any) => {
+      for (let i of x) {
+        if (i.userDTO.profilePicture) {
+          i.userDTO.profilePicture.picByte = 'data:image/jpeg;base64,' + i.userDTO.profilePicture.picByte;
+        }
+      }
       return x;
     }))
   }
 
-  getFriendsPosts(){
-    return this.http.get(POSTS_API + 'friends').pipe(map((x : any)=> {
-      for(let i of x){
-        i.userDTO.profilePicture.picByte='data:image/jpeg;base64,' + i.userDTO.profilePicture.picByte;
-      } 
+  getFriendsPosts() {
+    return this.http.get(POSTS_API + 'friends').pipe(map((x: any) => {
+      for (let i of x) {
+        if (i.userDTO.profilePicture) {
+          i.userDTO.profilePicture.picByte = 'data:image/jpeg;base64,' + i.userDTO.profilePicture.picByte;
+        }
+      }
       return x;
     }))
   }
 
-  getPostsOfUser(userId){
-    return this.http.get(POSTS_API + userId).pipe(map((x : any)=> {
-      for(let i of x){
-        i.userDTO.profilePicture.picByte='data:image/jpeg;base64,' + i.userDTO.profilePicture.picByte;
-      } 
+  getPostsOfUser(userId) {
+    return this.http.get(POSTS_API + userId).pipe(map((x: any) => {
+      for (let i of x) {
+        if (i.userDTO.profilePicture) {
+          i.userDTO.profilePicture.picByte = 'data:image/jpeg;base64,' + i.userDTO.profilePicture.picByte;
+        }
+      }
       return x;
     }))
   }
 
-  getCommentOfPost(postId){
-    return this.http.get(COMMENT_API + postId).pipe(map((x : any)=> {
-      for(let i of x){
-        i.userDTO.profilePicture.picByte='data:image/jpeg;base64,' + i.userDTO.profilePicture.picByte;
-      } 
+  getCommentOfPost(postId) {
+    return this.http.get(COMMENT_API + postId).pipe(map((x: any) => {
+      for (let i of x) {
+        if (i.userDTO.profilePicture) {
+          i.userDTO.profilePicture.picByte = 'data:image/jpeg;base64,' + i.userDTO.profilePicture.picByte;
+        }
+      }
       return x;
     }))
   }
 
-  addPost(post):Observable<any>{
-    return this.http.post(POSTS_API,{
-      content:post.content
+  addPost(post): Observable<any> {
+    return this.http.post(POSTS_API, {
+      content: post.content
     });
   }
 
-  addComment(comment,postid):Observable<any>{
-    return this.http.post(COMMENT_API + postid,{
-      comment:comment.content
+  addComment(comment, postid): Observable<any> {
+    return this.http.post(COMMENT_API + postid, {
+      comment: comment.content
     });
   }
 }

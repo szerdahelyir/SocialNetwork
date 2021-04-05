@@ -35,6 +35,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { CommentsComponent } from './comments/comments.component';
 import { ChatComponent } from './chat/chat.component';
+import { PrivatechatComponent } from './chat/privatechat/privatechat.component';
 
 
 
@@ -52,7 +53,8 @@ import { ChatComponent } from './chat/chat.component';
     ProfilesComponent,
     PostsComponent,
     CommentsComponent,
-    ChatComponent
+    ChatComponent,
+    PrivatechatComponent
   ],
   imports: [
     BrowserModule,

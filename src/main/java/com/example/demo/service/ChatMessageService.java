@@ -1,13 +1,16 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.ChatDTO;
 import com.example.demo.dto.ChatMessageDTO;
 import com.example.demo.dto.PostResponseDTO;
+import com.example.demo.mapper.ChatMapper;
 import com.example.demo.mapper.ChatMessageMapper;
 import com.example.demo.mapper.ImageMapper;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.models.Chat;
 import com.example.demo.models.ChatMessage;
 import com.example.demo.models.MessageStatus;
+import com.example.demo.models.User;
 import com.example.demo.repository.ChatMessageRepository;
 import com.example.demo.repository.ChatRepository;
 import com.example.demo.util.AuthenticationUtil;
@@ -38,6 +41,9 @@ public class ChatMessageService {
     @Autowired
     private ImageService imageService;
 
+    @Autowired
+    private ChatMapper chatMapper;
+
     public long countNewMessages(Long senderId, Long recipientId) {
         return chatMessageRepository.countBySenderIdAndRecipientIdAndStatus(
                 senderId, recipientId, MessageStatus.RECEIVED);
@@ -59,8 +65,8 @@ public class ChatMessageService {
                 .stream()
                 .map(message -> chatMessageMapper.toChatMessageDTO
                         (message,
-                                userMapper.toUserDTO(message.getSender(),2, imageMapper.toImageDTO(message.getSender().getProfilePicture(),imageService.decompressBytes(message.getSender().getProfilePicture().getPicByte()))),
-                                userMapper.toUserDTO(message.getReceiver(),2, imageMapper.toImageDTO(message.getReceiver().getProfilePicture(),imageService.decompressBytes(message.getSender().getProfilePicture().getPicByte())))
+                                userMapper.toUserDTO(message.getSender(),2, message.getSender().getProfilePicture()==null? null:imageMapper.toImageDTO(message.getSender().getProfilePicture(),imageService.decompressBytes(message.getSender().getProfilePicture().getPicByte()))),
+                                userMapper.toUserDTO(message.getReceiver(),2, message.getReceiver().getProfilePicture()==null? null:imageMapper.toImageDTO(message.getReceiver().getProfilePicture(),imageService.decompressBytes(message.getSender().getProfilePicture().getPicByte())))
                         )
                 )
                 .collect(Collectors.toList());
@@ -82,6 +88,21 @@ public class ChatMessageService {
         chatMessage.setStatus(MessageStatus.RECEIVED);
         chatMessageRepository.save(chatMessage);
         return chatMessage;
+    }
+
+    public List<ChatDTO> findChats(){
+        List<Chat> chats=chatRepository.findChats(AuthenticationUtil.getAuthenticatedUserId());
+
+        List<ChatDTO> chatDTOS=chats
+                .stream()
+                .map(c->{
+                    User recipient=c.getUser().getId().equals(AuthenticationUtil.getAuthenticatedUserId())? c.getUser2():c.getUser();
+                    return chatMapper.toChatDTO
+                            (c,
+                            userMapper.toUserDTO(recipient,2,recipient.getProfilePicture()==null? null:imageMapper.toImageDTO(recipient.getProfilePicture(), imageService.decompressBytes(recipient.getProfilePicture().getPicByte()))));
+                })
+                .collect(Collectors.toList());
+        return chatDTOS;
     }
 
 }

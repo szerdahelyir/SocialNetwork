@@ -1,0 +1,14 @@
+.bal{
+    display:flex !important;
+}
+.jobb{
+    display:flex !important; 
+    justify-content: flex-end !important;
+}
+.infscroll{
+    overflow:scroll;
+    height:90%;
+}
+.infscroll::-webkit-scrollbar {
+    display: none;
+}
