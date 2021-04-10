@@ -32,4 +32,27 @@ export class UserService {
       return x;
     }));
   }
+
+  getSearchedUsers(request){
+    const params=request;
+    return this.http.get(USER_API + 'search',{params}).pipe(map((x)=> {
+      let temp : any=x['content'];
+      for(let i of temp){
+        if(i.profilePicture){
+          i.profilePicture.picByte='data:image/jpeg;base64,' + i.profilePicture.picByte;
+        }
+      } 
+      return x;
+    }));
+  }
+
+  updateUser(update,id){
+    return this.http.put(USER_API + "edit/" + id,{
+    firstName:update.firstName,
+    lastName:update.lastName,
+    description:update.description,
+    location:update.location,
+    dob:update.dob
+    })
+  }
 }

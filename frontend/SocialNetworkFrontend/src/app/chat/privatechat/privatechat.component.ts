@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MessageService } from 'src/app/services/message.service';
 import { TokenService } from 'src/app/services/token.service';
 import { UserService } from 'src/app/services/user.service';
@@ -13,15 +14,26 @@ export class PrivatechatComponent implements OnInit {
   @Input() id: any;
   currentUserId: number;
   messages: [];
+  form: FormGroup = new FormGroup({});
+  @ViewChild('target') private myScrollContainer: ElementRef;
+  @ViewChild('msginput') input;
 
   constructor(private token: TokenService,
     private userService: UserService,
     private http: HttpClient,
-    private messageService: MessageService) { }
+    private messageService: MessageService,
+    private fb:FormBuilder) { }
 
   ngOnInit(): void {
     this.currentUserId = this.token.getUser().id;
     this.getMessages();
+    setInterval(()=>{
+      this.getMessages();
+    },3000);
+    this.form = this.fb.group({
+      message: [''],
+    })
+    this.messageService.connect();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -33,15 +45,36 @@ export class PrivatechatComponent implements OnInit {
       console.log(this.currentUserId, this.id);
       console.log(data);
       this.messages = data;
+      this.scrollToElement(this.myScrollContainer);
     })
   }
-  asd() {
-    this.getMessages();
+  keyDownFunction(event) {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      this.submit();
+    }
   }
-  onScrollUp(){
-    console.log("fel");
+
+  submit(){
+    this.input.nativeElement.value = ' ';
+    this.messageService.sendMessage({recipientId:this.id, message:this.form.value.message});
+    this.form.value.message='';
   }
-  onScroll(){
-    console.log("asd");
+
+  onMessageReceived(msg){
+    const temp=JSON.parse(msg.body);
+    console.log(temp.messageId);
+    console.log(temp);
+    this.messageService.getMessage(temp.messageId).subscribe(data=>{
+      console.log(data);
+    })
+  }
+
+  scrollToElement(el): void {
+    this.myScrollContainer.nativeElement.scroll({
+      top: this.myScrollContainer.nativeElement.scrollHeight,
+      left: 0,
+      behavior: 'smooth'
+    });
   }
 }

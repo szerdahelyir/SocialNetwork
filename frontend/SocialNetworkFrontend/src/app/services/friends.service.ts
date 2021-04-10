@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from "rxjs/operators"; 
+
 const FRIENDS_API = 'http://localhost:8080/api/relationships/';
 
 const httpOptions = {
@@ -32,8 +33,23 @@ export class FriendsService {
     }));
   }
 
+  getFriendRequests(){
+    return this.http.get(FRIENDS_API + 'requests').pipe(map((x:any)=> {
+      for(let i of x){
+        if(i.profilePicture){
+          i.profilePicture.picByte='data:image/jpeg;base64,' + i.profilePicture.picByte;
+        }
+      } 
+      return x;
+    }));
+  }
+
   acceptFriendRequest(id):Observable<any>{
     return this.http.put(FRIENDS_API + 'accept/' + id,null);
+  }
+
+  declineFriendRequest(id):Observable<any>{
+    return this.http.put(FRIENDS_API + 'decline/' + id,null);
   }
 
 

@@ -73,8 +73,8 @@ public class ChatMessageService {
         return responseDTOS;
     }
 
-    public ChatMessage findById(Long id) {
-        return chatMessageRepository
+    public ChatMessageDTO findById(Long id) {
+        ChatMessage msg=chatMessageRepository
                 .findById(id)
                 .map(chatMessage -> {
                     chatMessage.setStatus(MessageStatus.DELIVERED);
@@ -82,6 +82,10 @@ public class ChatMessageService {
                 })
                 .orElseThrow(() ->
                         new IllegalStateException("can't find message (" + id + ")"));
+        return chatMessageMapper.toChatMessageDTO(msg,
+                userMapper.toUserDTO(msg.getSender(),2, msg.getSender().getProfilePicture()==null? null:imageMapper.toImageDTO(msg.getSender().getProfilePicture(),imageService.decompressBytes(msg.getSender().getProfilePicture().getPicByte()))),
+                userMapper.toUserDTO(msg.getReceiver(),2, msg.getReceiver().getProfilePicture()==null? null:imageMapper.toImageDTO(msg.getReceiver().getProfilePicture(),imageService.decompressBytes(msg.getSender().getProfilePicture().getPicByte())))
+        );
     }
 
     public ChatMessage save(ChatMessage chatMessage) {

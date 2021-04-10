@@ -25,9 +25,19 @@ public class RelationshipController {
         this.relationshipService.acceptFriendRequest(id);
     }
 
+    @PutMapping("/decline/{userId}")
+    public void declineFriendRequest(@PathVariable("userId") Long id) {
+        this.relationshipService.declineFriendRequest(id);
+    }
+
     @GetMapping("/friends")
     public Page<UserDTO> getFriends(@RequestParam(name = "page", defaultValue = "0") int page,
                                     @RequestParam(name = "size", defaultValue = "10") int size) {
         return this.relationshipService.getFriends(page,size);
+    }
+
+    @GetMapping("/requests")
+    public List<UserDTO> getFriendRequests() {
+        return this.relationshipService.getFriendRequests();
     }
 }

@@ -1,7 +1,7 @@
 <div>
-  <form action="" class="search-bar">
-    <input type="search" name="search" pattern=".*\S.*" required>
-    <button class="search-btn" type="submit">
+  <form [formGroup]="form" class="search-bar">
+    <input type="search" formControlName="search" pattern=".*\S.*" required>
+    <button class="search-btn" type="submit" (click)="search()">
         <span>Search</span>
     </button>
 </form>
@@ -33,7 +33,7 @@
             </mat-card-actions>
           </mat-card>
     </table>
-    <mat-paginator [pageSizeOptions]="[10, 25, 100]" [pageSize]="2" [length]="totalElements"
+    <mat-paginator [pageSizeOptions]="[10, 25, 100]" [pageSize]="pageSize" [length]="totalElements"
         (page)="nextPage($event)">
  
     </mat-paginator>

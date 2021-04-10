@@ -1,9 +1,5 @@
 <div 
-infiniteScroll
-[infiniteScrollDistance]="2"
-[infiniteScrollThrottle]="50"
-[scrollWindow]="false"
-(scrolled)="onScrollDown()"
+#target
 class="infscroll"
 >
     <div *ngFor="let c of comments" class="posts">
@@ -25,9 +21,9 @@ class="infscroll"
         </mat-card>
     </div>
 </div>
-<form [formGroup]="form" (click)="submit()">
+<form [formGroup]="form"  (keydown)="keyDownFunction($event)">
     <mat-form-field class="maxwidth">
-        <textarea matInput placeholder="Write your comment here..." formControlName="content"></textarea>
-        <button mat-raised-button class="submit">Submit</button>
+        <textarea required #commentinput class="noresize" matInput placeholder="Write your comment here..." formControlName="content"></textarea>
+        <button mat-raised-button class="submit" (click)="submit()">Submit</button>
     </mat-form-field>
 </form>

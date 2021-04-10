@@ -1,0 +1,39 @@
+<h1 mat-dialog-title>Edit profile</h1>
+<div mat-dialog-content>
+    <mat-form-field>
+        <mat-label>First name</mat-label>
+        <span class="material-icons">
+            perm_identity
+        </span><input matInput required [(ngModel)]="data.firstName">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Last name</mat-label>
+        <span class="material-icons">
+            perm_identity
+        </span><input matInput required [(ngModel)]="data.lastName">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Location</mat-label>
+        <span class="material-icons">
+            location_city
+        </span><input matInput required [(ngModel)]="data.location">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Description</mat-label>
+        <span class="material-icons">
+            textsms
+        </span><textarea matInput required [(ngModel)]="data.description"></textarea>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Date of birth</mat-label>
+        <span class="material-icons">
+            date_range
+        </span><input matInput required [matDatepicker]="picker" [(ngModel)]="data.dob">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Cancel</button>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Save</button>
+</div>

@@ -1,20 +1,23 @@
-<div class="infscroll">
+<div #target class="infscroll">
     <div *ngFor="let m of messages" class="chats">
-        <mat-card class="example-card">
+        <mat-card class="mat-elevation-z5 height" >
             <div *ngIf="m.sender.id==currentUserId">
                 <mat-card-header class="jobb">
-                    <div mat-card-avatar class="example-header-image">
+                    
+                    <mat-card-content class="full">
+                        <p>{{m.message}}</p>
+                        
+                    </mat-card-content>
+                    
+                    <div>
                         <ngx-avatar class="profilepic" *ngIf="!m.sender.profilePicture" size="50"
                             src="assets/avatar.png">
                         </ngx-avatar>
                         <ngx-avatar class="profilepic" *ngIf="m.sender.profilePicture" size="50"
                             [src]="m.sender.profilePicture.picByte"></ngx-avatar>
+                            
                     </div>
-                    <mat-card-title>{{m.sender.firstName}} {{m.sender.lastName}}</mat-card-title>
-                    <mat-card-content>
-                        <p>{{m.message}}</p>
-                    </mat-card-content>
-                    <mat-card-subtitle>{{m.creationDate}}</mat-card-subtitle>
+                    <mat-card-subtitle>{{m.creationDate|date:'medium'}}</mat-card-subtitle>
                 </mat-card-header>
             </div>
             <div *ngIf="m.sender.id==id">
@@ -26,13 +29,20 @@
                         <ngx-avatar class="profilepic" *ngIf="m.sender.profilePicture" size="50"
                             [src]="m.sender.profilePicture.picByte"></ngx-avatar>
                     </div>
-                    <mat-card-title>{{m.sender.firstName}} {{m.sender.lastName}}</mat-card-title>
-                    <mat-card-content>
+                    <mat-card-content  class="full">
                         <p>{{m.message}}</p>
+                        <mat-card-subtitle>{{m.creationDate|date:'medium'}}</mat-card-subtitle>
                     </mat-card-content>
-                    <mat-card-subtitle>{{m.creationDate}}</mat-card-subtitle>
+                    
                 </mat-card-header>
             </div>
         </mat-card>
     </div>
 </div>
+
+<form *ngIf="id" [formGroup]="form" (keydown)="keyDownFunction($event)">
+    <mat-form-field class="maxwidth">
+        <textarea required #msginput matInput placeholder="Send message..." formControlName="message"></textarea>
+        <button mat-raised-button class="submit" (click)="submit()">Send</button>
+    </mat-form-field>
+</form>

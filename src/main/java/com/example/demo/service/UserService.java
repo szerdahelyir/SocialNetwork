@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 
+import com.example.demo.dto.UpdateUserDTO;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.mapper.ImageMapper;
 import com.example.demo.mapper.UserMapper;
@@ -51,6 +52,24 @@ public class UserService {
 
     }
 
+    public Page<UserDTO> getSearchedUsers(int page, int size,String name) {
+        Long id = AuthenticationUtil.getAuthenticatedUserId();
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Page<User> pageResult = userRepository.findSearchrResults(name,pageRequest);
+        List<UserDTO> users = pageResult
+                .stream()
+                .map(u->{
+                    if(u.getProfilePicture()==null){
+                        return userMapper.toUserDTO(u,relationshipService.relationshipWithUser(u.getId()),null);
+                    }
+                    return userMapper.toUserDTO(u,relationshipService.relationshipWithUser(u.getId()),imageMapper.toImageDTO(u.getProfilePicture(),imageService.decompressBytes(u.getProfilePicture().getPicByte())));
+                })
+                .collect(Collectors.toList());
+
+        return new PageImpl<>(users, pageRequest, pageResult.getTotalElements());
+
+    }
+
 
     public UserDTO getUser(Long userId) {
         boolean exists = userRepository.existsById(userId);
@@ -74,6 +93,12 @@ public class UserService {
             );
         }
         userRepository.deleteById(userId);
+    }
+
+    public void updateCustomer(UpdateUserDTO dto, Long userId) {
+        User user = userRepository.findUserById(userId);
+        userMapper.updateCustomerFromDto(dto, user);
+        userRepository.save(user);
     }
 
 }

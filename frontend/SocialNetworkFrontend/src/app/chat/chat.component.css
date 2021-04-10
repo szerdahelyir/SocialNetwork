@@ -11,4 +11,7 @@
     border-radius: 20px;
     box-shadow: 5px;
 }
+.infscroll::-webkit-scrollbar {
+    display: none;
+}
 

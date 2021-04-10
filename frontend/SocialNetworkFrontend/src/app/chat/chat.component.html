@@ -1,9 +1,6 @@
 <div class="container">
     <mat-grid-list cols="4" rowHeight="100%">
         <mat-grid-tile [colspan]=1>
-            <p>chat works!</p>
-            <button (click)="connect()">asdasdasd</button>
-            <button (click)="sendMessage()">send</button>
             <div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50" [scrollWindow]="false"
                 (scrolled)="onScrollDown()" class="infscroll">
                 <div *ngFor="let c of chats" class="chats">

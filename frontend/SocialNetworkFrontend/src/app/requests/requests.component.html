@@ -1,0 +1,21 @@
+<div 
+#target
+class="infscroll"
+>
+    <div *ngFor="let r of requests" class="posts">
+        <mat-card class="example-card">
+            <mat-card-header>
+                <div mat-card-avatar class="example-header-image">
+                <ngx-avatar class="profilepic" *ngIf="!r.profilePicture" size="50" src="assets/avatar.png"></ngx-avatar>
+                <ngx-avatar class="profilepic" *ngIf="r.profilePicture" size="50" [src]="r.profilePicture.picByte"></ngx-avatar>
+                </div>
+            <mat-card-title>{{r.firstName}} {{r.lastName}}</mat-card-title>
+            <mat-card-subtitle>{{r.location}}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-actions>
+            <button mat-button (click)="accept(r.id)">Accept</button>
+            <button mat-button (click)="decline(r.id)">Decline </button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>

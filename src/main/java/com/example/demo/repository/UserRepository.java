@@ -24,4 +24,8 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
     @Query("SELECT u FROM User u WHERE u.id != :userId")
     Page<User> findAll(@Param("userId") Long userId,Pageable pageable);
+
+    @Query("Select u FROM User u WHERE lower(u.firstName) like lower(concat('%', :name,'%'))" +
+            "OR lower(u.lastName) like lower(concat('%', :name,'%'))")
+    Page<User> findSearchrResults(@Param("name") String name,Pageable pageable);
 }

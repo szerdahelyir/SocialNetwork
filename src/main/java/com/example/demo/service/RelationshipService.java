@@ -73,7 +73,7 @@ public class RelationshipService {
         relationshipRepository.save(relationship);
         User user1 = userRepository.findUserById(AuthenticationUtil.getAuthenticatedUserId());
         User user2 = userRepository.findUserById(userId);
-        Chat chat=new Chat(selectUserWithLowerId(user1, user2), selectUserWithHigherId(user1, user2));
+        Chat chat = new Chat(selectUserWithLowerId(user1, user2), selectUserWithHigherId(user1, user2));
         chatRepository.save(chat);
     }
 
@@ -81,31 +81,44 @@ public class RelationshipService {
         User actionUser = userRepository.findUserById(AuthenticationUtil.getAuthenticatedUserId());
         Relationship relationship = relationshipRepository.findRelationship(userId < AuthenticationUtil.getAuthenticatedUserId() ? userId : AuthenticationUtil.getAuthenticatedUserId(),
                 userId > AuthenticationUtil.getAuthenticatedUserId() ? userId : AuthenticationUtil.getAuthenticatedUserId());
-        relationship.setStatus(2);
-        relationship.setActionUser(actionUser);
-        relationshipRepository.save(relationship);
+        relationshipRepository.delete(relationship);
     }
 
     public Page<UserDTO> getFriends(int page, int size) {
         Long currentId = AuthenticationUtil.getAuthenticatedUserId();
         PageRequest pageRequest = PageRequest.of(page, size);
-        Page<Relationship> relationships = relationshipRepository.findFriends(currentId, 1,pageRequest);
+        Page<Relationship> relationships = relationshipRepository.findFriends(currentId, 1, pageRequest);
         List<UserDTO> friends = relationships.stream()
-                .map(r ->{
+                .map(r -> {
                     User toreturn = r.getUser().getId().equals(AuthenticationUtil.getAuthenticatedUserId()) ? r.getUser2() : r.getUser();
 
-                    if(toreturn.getProfilePicture()==null){
-                        return userMapper.toUserDTO(toreturn,relationshipWithUser(toreturn.getId()),imageMapper.toImageDTO(toreturn.getProfilePicture(),null));
+                    if (toreturn.getProfilePicture() == null) {
+                        return userMapper.toUserDTO(toreturn, relationshipWithUser(toreturn.getId()), imageMapper.toImageDTO(toreturn.getProfilePicture(), null));
                     }
-                    return userMapper.toUserDTO(toreturn,relationshipWithUser(toreturn.getId()),imageMapper.toImageDTO(toreturn.getProfilePicture(),imageService.decompressBytes(toreturn.getProfilePicture().getPicByte())));
+                    return userMapper.toUserDTO(toreturn, relationshipWithUser(toreturn.getId()), imageMapper.toImageDTO(toreturn.getProfilePicture(), imageService.decompressBytes(toreturn.getProfilePicture().getPicByte())));
 
                 })
                 .collect(Collectors.toList());
-        //List<UserDTO> UserDTOfriends = this.userMapper.toUserDTOs(friends);
         return new PageImpl<>(friends, pageRequest, relationships.getTotalElements());
     }
 
-    public List<Long> getFriendsIds(){
+    public List<UserDTO> getFriendRequests() {
+        Long currentId = AuthenticationUtil.getAuthenticatedUserId();
+        List<Relationship> relationships = relationshipRepository.findFriendFriendRequests(currentId, 0);
+        List<UserDTO> friends = relationships.stream()
+                .map(r -> {
+                    User toreturn = r.getUser().getId().equals(AuthenticationUtil.getAuthenticatedUserId()) ? r.getUser2() : r.getUser();
+
+                    if (toreturn.getProfilePicture() == null) {
+                        return userMapper.toUserDTO(toreturn, relationshipWithUser(toreturn.getId()), imageMapper.toImageDTO(toreturn.getProfilePicture(), null));
+                    }
+                    return userMapper.toUserDTO(toreturn, relationshipWithUser(toreturn.getId()), imageMapper.toImageDTO(toreturn.getProfilePicture(), imageService.decompressBytes(toreturn.getProfilePicture().getPicByte())));
+                })
+                .collect(Collectors.toList());
+        return friends;
+    }
+
+    public List<Long> getFriendsIds() {
         Long currentId = AuthenticationUtil.getAuthenticatedUserId();
         List<Relationship> relationships = relationshipRepository.findFriendRelationships(currentId, 1);
         List<Long> friendsIds = relationships.stream()
@@ -114,9 +127,9 @@ public class RelationshipService {
         return friendsIds;
     }
 
-    public Integer relationshipWithUser(Long userId){
-        if(relationshipRepository.findRelationship(userId < AuthenticationUtil.getAuthenticatedUserId() ? userId : AuthenticationUtil.getAuthenticatedUserId(),
-                userId > AuthenticationUtil.getAuthenticatedUserId() ? userId : AuthenticationUtil.getAuthenticatedUserId())!=null) {
+    public Integer relationshipWithUser(Long userId) {
+        if (relationshipRepository.findRelationship(userId < AuthenticationUtil.getAuthenticatedUserId() ? userId : AuthenticationUtil.getAuthenticatedUserId(),
+                userId > AuthenticationUtil.getAuthenticatedUserId() ? userId : AuthenticationUtil.getAuthenticatedUserId()) != null) {
             Relationship relationship = relationshipRepository.findRelationship(userId < AuthenticationUtil.getAuthenticatedUserId() ? userId : AuthenticationUtil.getAuthenticatedUserId(),
                     userId > AuthenticationUtil.getAuthenticatedUserId() ? userId : AuthenticationUtil.getAuthenticatedUserId());
             // én küldtem neki requestet

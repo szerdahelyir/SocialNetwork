@@ -4,29 +4,34 @@
             <div>
                 <div class="image-upload">
                     <label for="file-input">
-                        <ngx-avatar class="profilepic" *ngIf="!curruser.profilePicture" size="150" src="assets/avatar.png"></ngx-avatar>
-                        <ngx-avatar class="profilepic" *ngIf="curruser.profilePicture" size="150" [src]=curruser.profilePicture.picByte></ngx-avatar>
-                        
+                        <ngx-avatar class="profilepic" *ngIf="!curruser.profilePicture" size="150"
+                            src="assets/avatar.png"></ngx-avatar>
+                        <ngx-avatar class="profilepic" *ngIf="curruser.profilePicture" size="150"
+                            [src]=curruser.profilePicture.picByte></ngx-avatar>
+
                     </label>
                     <input id="file-input" type="file" (change)="onFileChanged($event)" />
                 </div>
                 <div>
                     <h2>{{curruser.firstName}} {{curruser.lastName}}</h2>
+                    <h2><span class="material-icons">
+                            location_city
+                        </span>{{curruser.location}} </h2>
                 </div>
             </div>
 
             <div>
-            <ng-container *ngIf="curruser.description; else noDescription">
-                {{curruser.description}}
-            </ng-container>
+                <ng-container *ngIf="curruser.description; else noDescription">
+                    {{curruser.description}}
+                </ng-container>
 
-            <ng-template #noDescription>
-                Please fill out your about me infos.
-            </ng-template>
+                <ng-template #noDescription>
+                    Please fill out your about me infos.
+                </ng-template>
             </div>
-            <button mat-button>Edit profile 
+            <button mat-button (click)="openDialog()">Edit profile 
                 <span class="material-icons">
-                mode_edit
+                    mode_edit
                 </span>
             </button>
         </div>

@@ -5,16 +5,6 @@
 .posts{
     margin:20px;
 }
-mat-card{
-    border-radius: 25px;
-}
-
-.submit{
-    float:right;
-}
-.maxwidth{
-    width:100%;
-}
 .infscroll::-webkit-scrollbar {
     display: none;
 }

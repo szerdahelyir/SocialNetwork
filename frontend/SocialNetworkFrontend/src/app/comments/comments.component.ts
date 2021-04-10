@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { PostService } from '../services/post.service';
 
@@ -8,13 +8,15 @@ import { PostService } from '../services/post.service';
   styleUrls: ['./comments.component.css']
 })
 export class CommentsComponent implements OnInit {
-  @Input() postId:any;
-  originalComments:any[];
-  comments:any[];
+  @Input() postId: any;
+  originalComments: any[];
+  comments: any[];
   form: FormGroup = new FormGroup({});
+  @ViewChild('target') private myScrollContainer: ElementRef;
+  @ViewChild('commentinput') input;
 
-  constructor(private postService:PostService,
-              private fb:FormBuilder) { }
+  constructor(private postService: PostService,
+    private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.getComments();
@@ -23,46 +25,43 @@ export class CommentsComponent implements OnInit {
     })
   }
 
-  ngOnChanges(changes: SimpleChanges){
+  ngOnChanges(changes: SimpleChanges) {
     this.getComments();
+    this.scrollToElement(this.myScrollContainer);
   }
 
   private getComments() {
     this.postService.getCommentOfPost(this.postId)
-      .subscribe((data:any) => {
-        this.originalComments = data;
-        this.comments = data.slice(0,10);
+      .subscribe((data: any) => {
+        this.comments = data;
+        this.scrollToElement(this.myScrollContainer);
+        
       }, error => {
         console.log(error);
       });
   }
 
-  asd(){
-    console.log(this.comments)
+  submit() {
+    this.input.nativeElement.value = ' ';
+    this.postService.addComment(this.form.value, this.postId).subscribe(data => {
+      this.getComments();
+      this.scrollToElement(this.myScrollContainer);
+    });
   }
-  onScrollDown(){
-    if(this.comments.length < this.originalComments.length){  
-      let len = this.comments.length;
 
-      let toshowitem = this.originalComments.length-len>2?2:this.originalComments.length-len;
- 
-      for(let i = len; i < len+toshowitem; i++){
-        this.comments.push(this.originalComments[i]);
-      }
+  keyDownFunction(event) {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      this.submit();
     }
   }
 
-  get f(){
-    return this.form.controls;
-  }
-    
-  submit(){
-    console.log(this.form.value);
-    this.postService.addComment(this.form.value,this.postId).subscribe(data => {
-      console.log(data)
-      this.getComments();
+  scrollToElement(el): void {
+    this.myScrollContainer.nativeElement.scroll({
+      top: this.myScrollContainer.nativeElement.scrollHeight,
+      left: 0,
+      behavior: 'smooth'
     });
-    
   }
 
 }

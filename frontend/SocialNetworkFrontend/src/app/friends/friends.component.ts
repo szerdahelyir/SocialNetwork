@@ -13,13 +13,14 @@ export class FriendsComponent implements OnInit {
 
   users: any[];
   totalElements: number = 0;
+  pageSize:number=2;
 
   constructor(private friendsService: FriendsService,
               private userService: UserService,
               private router: Router) { }
 
   ngOnInit(): void {
-    this.getFriends({ page: "0", size: "10" });
+    this.getFriends({ page: "0", size: this.pageSize });
   }
 
   private getFriends(request) {

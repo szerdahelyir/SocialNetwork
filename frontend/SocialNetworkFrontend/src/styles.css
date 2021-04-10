@@ -116,3 +116,9 @@ body {
 .mat-grid-tile .mat-figure {
   display:block  !important;
 }
+.maxwidth{
+  width:100%;
+}
+textarea {
+  resize: none !important;
+}

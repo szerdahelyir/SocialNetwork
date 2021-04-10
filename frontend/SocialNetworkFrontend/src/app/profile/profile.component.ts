@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ImageService } from '../services/image.service';
 import { TokenService } from '../services/token.service';
 import { UserService } from '../services/user.service';
+import { EditDialogComponent } from './edit-dialog/edit-dialog.component';
 
 
 @Component({
@@ -20,7 +22,8 @@ export class ProfileComponent implements OnInit {
 
   constructor(private token: TokenService,
     private userService: UserService,
-    private http: HttpClient) { }
+    private http: HttpClient,
+    public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.currentUser = this.token.getUser();
@@ -30,6 +33,38 @@ export class ProfileComponent implements OnInit {
   getUser() {
     this.userService.getUser(this.currentUser.id).subscribe((data: any) => {
       this.curruser = data;
+      console.log(data);
+    });
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(EditDialogComponent, {
+      width: '250px',
+      data: {
+        firstName: this.curruser.firstName,
+        lastName: this.curruser.lastName,
+        location: this.curruser.location,
+        description: this.curruser.description,
+        dob: this.curruser.dob
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.curruser.firstName = result.firstName;
+      this.curruser.lastName = result.lastName;
+      this.curruser.location = result.location;
+      this.curruser.dob = result.dob;
+      this.curruser.description = result.description;
+      this.userService.updateUser({
+        firstName: result.firstName,
+        lastName: result.lastName,
+        description: result.description,
+        location: result.location,
+        dob: result.dob
+      }, this.curruser.id).subscribe(data=>{
+        console.log(data);
+      })
     });
   }
 
@@ -52,11 +87,11 @@ export class ProfileComponent implements OnInit {
       .subscribe((response) => {
         if (response.status === 200) {
           this.message = 'Image uploaded successfully';
+          this.getUser();
         } else {
           this.message = 'Image not uploaded successfully';
         }
       }
       );
-    window.location.reload();
   }
 }

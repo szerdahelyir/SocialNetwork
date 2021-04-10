@@ -9,6 +9,7 @@ import { FindFriendsComponent } from './find-friends/find-friends.component';
 import { FriendsComponent } from './friends/friends.component';
 import { ProfilesComponent } from './profiles/profiles.component';
 import { ChatComponent } from './chat/chat.component';
+import { RequestsComponent } from './requests/requests.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full', canActivate: [AuthGuard]},
@@ -19,7 +20,8 @@ const routes: Routes = [
   { path: 'find-friends', component: FindFriendsComponent, canActivate: [AuthGuard]},
   { path: 'friends', component: FriendsComponent, canActivate: [AuthGuard]},
   { path: 'profiles/:id', component: ProfilesComponent, canActivate: [AuthGuard]},
-  { path: 'chat', component: ChatComponent, canActivate: [AuthGuard]}
+  { path: 'chat', component: ChatComponent, canActivate: [AuthGuard]},
+  { path: 'requests', component: RequestsComponent, canActivate: [AuthGuard]}
   
 ];
 

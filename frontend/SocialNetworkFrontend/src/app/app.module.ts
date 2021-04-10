@@ -36,6 +36,10 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { CommentsComponent } from './comments/comments.component';
 import { ChatComponent } from './chat/chat.component';
 import { PrivatechatComponent } from './chat/privatechat/privatechat.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import { EditDialogComponent } from './profile/edit-dialog/edit-dialog.component';
+import { NotificationComponent } from './notification/notification.component';
+import { RequestsComponent } from './requests/requests.component';
 
 
 
@@ -54,7 +58,10 @@ import { PrivatechatComponent } from './chat/privatechat/privatechat.component';
     PostsComponent,
     CommentsComponent,
     ChatComponent,
-    PrivatechatComponent
+    PrivatechatComponent,
+    EditDialogComponent,
+    NotificationComponent,
+    RequestsComponent
   ],
   imports: [
     BrowserModule,
@@ -81,7 +88,8 @@ import { PrivatechatComponent } from './chat/privatechat/privatechat.component';
     MatPaginatorModule,
     MatGridListModule,
     InfiniteScrollModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDialogModule
   ],
   providers: [
     authInterceptorProviders,

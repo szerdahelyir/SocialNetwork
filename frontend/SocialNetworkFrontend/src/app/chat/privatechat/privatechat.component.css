@@ -12,3 +12,11 @@
 .infscroll::-webkit-scrollbar {
     display: none;
 }
+.full{width:100%}
+.height{height:40px;}
+.submit{
+    float:right;
+}
+.noresize {
+    resize: none;
+  }
