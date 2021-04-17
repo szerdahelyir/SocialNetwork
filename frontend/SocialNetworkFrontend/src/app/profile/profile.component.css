@@ -9,3 +9,9 @@
 .profilepic{
     cursor:pointer;
 }
+.location{
+    display:flex;
+}
+.location>.material-icons{
+    font-size:26px;
+}

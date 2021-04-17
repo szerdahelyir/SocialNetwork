@@ -12,9 +12,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<User,Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findUserByEmail(String email);
+
     User findUserById(Long id);
 
     Boolean existsByEmail(String email);
@@ -23,9 +24,9 @@ public interface UserRepository extends JpaRepository<User,Long> {
     List<User> findAllExceptUserWithId(@Param("userId") Long userId);
 
     @Query("SELECT u FROM User u WHERE u.id != :userId")
-    Page<User> findAll(@Param("userId") Long userId,Pageable pageable);
+    Page<User> findAll(@Param("userId") Long userId, Pageable pageable);
 
     @Query("Select u FROM User u WHERE lower(u.firstName) like lower(concat('%', :name,'%'))" +
             "OR lower(u.lastName) like lower(concat('%', :name,'%'))")
-    Page<User> findSearchrResults(@Param("name") String name,Pageable pageable);
+    Page<User> findSearchrResults(@Param("name") String name, Pageable pageable);
 }

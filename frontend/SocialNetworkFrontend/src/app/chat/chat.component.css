@@ -14,4 +14,9 @@
 .infscroll::-webkit-scrollbar {
     display: none;
 }
-
+.chatpartners{
+    overflow:scroll;
+}
+.chatpartners::-webkit-scrollbar {
+    display: none;
+}

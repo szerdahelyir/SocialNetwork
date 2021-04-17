@@ -10,9 +10,9 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
-    @Mapping(target="id", source="user.id")
-    @Mapping(target="relationship", source = "relationship")
-    @Mapping(target="profilePicture", source="profilePicture")
+    @Mapping(target = "id", source = "user.id")
+    @Mapping(target = "relationship", source = "relationship")
+    @Mapping(target = "profilePicture", source = "profilePicture")
     UserDTO toUserDTO(User user, Integer relationship, ImageDTO profilePicture);
 
     List<UserDTO> toUserDTOs(List<User> users);

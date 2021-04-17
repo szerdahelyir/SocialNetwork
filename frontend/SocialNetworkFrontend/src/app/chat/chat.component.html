@@ -1,6 +1,6 @@
 <div class="container">
     <mat-grid-list cols="4" rowHeight="100%">
-        <mat-grid-tile [colspan]=1>
+        <mat-grid-tile [colspan]=1 class="chatpartners">
             <div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50" [scrollWindow]="false"
                 (scrolled)="onScrollDown()" class="infscroll">
                 <div *ngFor="let c of chats" class="chats">

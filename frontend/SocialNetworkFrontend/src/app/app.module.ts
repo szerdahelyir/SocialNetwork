@@ -40,6 +40,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { EditDialogComponent } from './profile/edit-dialog/edit-dialog.component';
 import { NotificationComponent } from './notification/notification.component';
 import { RequestsComponent } from './requests/requests.component';
+import { MAT_DATE_LOCALE } from '@angular/material/core'
 
 
 
@@ -93,7 +94,8 @@ import { RequestsComponent } from './requests/requests.component';
   ],
   providers: [
     authInterceptorProviders,
-    MatDatepickerModule],
+    MatDatepickerModule,
+    { provide: MAT_DATE_LOCALE, useValue: 'hu-HU' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

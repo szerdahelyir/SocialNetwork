@@ -24,23 +24,23 @@ public class ImageService {
     @Autowired
     private UserRepository userRepository;
 
-    public void uploadImage(MultipartFile file) throws  IOException{
+    public void uploadImage(MultipartFile file) throws IOException {
         System.out.println("Original Image Byte Size - " + file.getBytes().length);
-        User user=userRepository.findUserById(AuthenticationUtil.getAuthenticatedUserId());
+        User user = userRepository.findUserById(AuthenticationUtil.getAuthenticatedUserId());
         Image img = new Image(file.getContentType(), compressBytes(file.getBytes()));
         imageRepository.save(img);
         user.setProfilePicture(img);
         userRepository.save(user);
     }
 
-    public Image getImage(Long imageId) throws  IOException{
+    public Image getImage(Long imageId) throws IOException {
         final Optional<Image> retrievedImage = imageRepository.findById(imageId);
         Image img = new Image(retrievedImage.get().getType(), decompressBytes(retrievedImage.get().getPicByte()));
         return img;
     }
 
     // compress the image bytes before storing it in the database
-    public  byte[] compressBytes(byte[] data) {
+    public byte[] compressBytes(byte[] data) {
         Deflater deflater = new Deflater();
         deflater.setInput(data);
         deflater.finish();
@@ -57,8 +57,9 @@ public class ImageService {
         System.out.println("Compressed Image Byte Size - " + outputStream.toByteArray().length);
         return outputStream.toByteArray();
     }
+
     // uncompress the image bytes before returning it to the angular application
-    public  byte[] decompressBytes(byte[] data) {
+    public byte[] decompressBytes(byte[] data) {
         Inflater inflater = new Inflater();
         inflater.setInput(data);
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);

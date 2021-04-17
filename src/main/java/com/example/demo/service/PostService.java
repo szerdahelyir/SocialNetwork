@@ -51,8 +51,7 @@ public class PostService {
                 .stream()
                 .map(p -> postMapper.toPostResponseDTO
                         (p,
-                                userMapper.toUserDTO(p.getUser(), relationshipService.relationshipWithUser(p.getUser().getId()),imageMapper.toImageDTO(p.getUser().getProfilePicture(),
-                                        imageService.decompressBytes(p.getUser().getProfilePicture().getPicByte()))),
+                                userMapper.toUserDTO(p.getUser(), relationshipService.relationshipWithUser(p.getUser().getId()), p.getUser().getProfilePicture() ==null ? null : imageMapper.toImageDTO(p.getUser().getProfilePicture(), imageService.decompressBytes(p.getUser().getProfilePicture().getPicByte()))),
                                 commentRepository.findByPostId(p.getId()).size()
                         )
                 )
@@ -67,7 +66,7 @@ public class PostService {
                 .stream()
                 .map(p -> postMapper.toPostResponseDTO
                         (p,
-                                userMapper.toUserDTO(p.getUser(), relationshipService.relationshipWithUser(userId),imageMapper.toImageDTO(p.getUser().getProfilePicture(),imageService.decompressBytes(p.getUser().getProfilePicture().getPicByte()))),
+                                userMapper.toUserDTO(p.getUser(), relationshipService.relationshipWithUser(userId), p.getUser().getProfilePicture() ==null ? null : imageMapper.toImageDTO(p.getUser().getProfilePicture(), imageService.decompressBytes(p.getUser().getProfilePicture().getPicByte()))),
                                 commentRepository.findByPostId(p.getId()).size()
                         )
                 )
@@ -76,7 +75,7 @@ public class PostService {
     }
 
     public List<PostResponseDTO> getPostsOfFriends() {
-        List<Long> friendIds =relationshipService.getFriendsIds();
+        List<Long> friendIds = relationshipService.getFriendsIds();
         friendIds.add(AuthenticationUtil.getAuthenticatedUserId());
         List<Post> posts = postRepository.findPostsByUserIds(friendIds);
 
@@ -84,7 +83,7 @@ public class PostService {
                 .stream()
                 .map(p -> postMapper.toPostResponseDTO
                         (p,
-                                userMapper.toUserDTO(p.getUser(), 2,imageMapper.toImageDTO(p.getUser().getProfilePicture(),imageService.decompressBytes(p.getUser().getProfilePicture().getPicByte()))),
+                                userMapper.toUserDTO(p.getUser(), 2, p.getUser().getProfilePicture() ==null ? null : imageMapper.toImageDTO(p.getUser().getProfilePicture(), imageService.decompressBytes(p.getUser().getProfilePicture().getPicByte()))),
                                 commentRepository.findByPostId(p.getId()).size()
                         )
                 )

@@ -106,8 +106,6 @@ public class AuthController {
                 }
             });
         }
-        System.out.println(user.getEmail());
-        System.out.println(user.getFirstName());
 
         user.setRoles(roles);
         userRepository.save(user);

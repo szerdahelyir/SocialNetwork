@@ -14,9 +14,12 @@
                 </div>
                 <div>
                     <h2>{{curruser.firstName}} {{curruser.lastName}}</h2>
-                    <h2><span class="material-icons">
+                    <div class="location">
+                        <span class="material-icons">
                             location_city
-                        </span>{{curruser.location}} </h2>
+                        </span>
+                        <h2>{{curruser.location}} </h2>
+                    </div>
                 </div>
             </div>
 
@@ -29,7 +32,7 @@
                     Please fill out your about me infos.
                 </ng-template>
             </div>
-            <button mat-button (click)="openDialog()">Edit profile 
+            <button mat-button (click)="openDialog()">Edit profile
                 <span class="material-icons">
                     mode_edit
                 </span>

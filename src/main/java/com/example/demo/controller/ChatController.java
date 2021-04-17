@@ -69,9 +69,7 @@ public class ChatController {
         messagingTemplate.convertAndSendToUser(
                 chatMessage.getRecipientId().toString(), "/queue/messages",
                 new ChatNotification(
-                        userMapper.toUserDTO(saved.getSender(), 2,
-                                imageMapper.toImageDTO(saved.getSender().getProfilePicture(),
-                                        imageService.decompressBytes(saved.getSender().getProfilePicture().getPicByte()))),
+                        userMapper.toUserDTO(saved.getSender(), 2,saved.getSender().getProfilePicture() ==null ? null : imageMapper.toImageDTO(saved.getSender().getProfilePicture(), imageService.decompressBytes(saved.getSender().getProfilePicture().getPicByte()))),
                         saved.getId()
                 )
         );

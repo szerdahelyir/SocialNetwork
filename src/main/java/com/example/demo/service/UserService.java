@@ -37,14 +37,14 @@ public class UserService {
     public Page<UserDTO> getUsers(int page, int size) {
         Long id = AuthenticationUtil.getAuthenticatedUserId();
         PageRequest pageRequest = PageRequest.of(page, size);
-        Page<User> pageResult = userRepository.findAll(id,pageRequest);
+        Page<User> pageResult = userRepository.findAll(id, pageRequest);
         List<UserDTO> users = pageResult
                 .stream()
-                .map(u->{
-                    if(u.getProfilePicture()==null){
-                        return userMapper.toUserDTO(u,relationshipService.relationshipWithUser(u.getId()),null);
+                .map(u -> {
+                    if (u.getProfilePicture() == null) {
+                        return userMapper.toUserDTO(u, relationshipService.relationshipWithUser(u.getId()), null);
                     }
-                    return userMapper.toUserDTO(u,relationshipService.relationshipWithUser(u.getId()),imageMapper.toImageDTO(u.getProfilePicture(),imageService.decompressBytes(u.getProfilePicture().getPicByte())));
+                    return userMapper.toUserDTO(u, relationshipService.relationshipWithUser(u.getId()), imageMapper.toImageDTO(u.getProfilePicture(), imageService.decompressBytes(u.getProfilePicture().getPicByte())));
                 })
                 .collect(Collectors.toList());
 
@@ -52,17 +52,17 @@ public class UserService {
 
     }
 
-    public Page<UserDTO> getSearchedUsers(int page, int size,String name) {
+    public Page<UserDTO> getSearchedUsers(int page, int size, String name) {
         Long id = AuthenticationUtil.getAuthenticatedUserId();
         PageRequest pageRequest = PageRequest.of(page, size);
-        Page<User> pageResult = userRepository.findSearchrResults(name,pageRequest);
+        Page<User> pageResult = userRepository.findSearchrResults(name, pageRequest);
         List<UserDTO> users = pageResult
                 .stream()
-                .map(u->{
-                    if(u.getProfilePicture()==null){
-                        return userMapper.toUserDTO(u,relationshipService.relationshipWithUser(u.getId()),null);
+                .map(u -> {
+                    if (u.getProfilePicture() == null) {
+                        return userMapper.toUserDTO(u, relationshipService.relationshipWithUser(u.getId()), null);
                     }
-                    return userMapper.toUserDTO(u,relationshipService.relationshipWithUser(u.getId()),imageMapper.toImageDTO(u.getProfilePicture(),imageService.decompressBytes(u.getProfilePicture().getPicByte())));
+                    return userMapper.toUserDTO(u, relationshipService.relationshipWithUser(u.getId()), imageMapper.toImageDTO(u.getProfilePicture(), imageService.decompressBytes(u.getProfilePicture().getPicByte())));
                 })
                 .collect(Collectors.toList());
 
@@ -79,10 +79,10 @@ public class UserService {
             );
         }
         User u = userRepository.findUserById(userId);
-        if(u.getProfilePicture()==null){
-            return userMapper.toUserDTO(u,this.relationshipService.relationshipWithUser(userId),null);
+        if (u.getProfilePicture() == null) {
+            return userMapper.toUserDTO(u, this.relationshipService.relationshipWithUser(userId), null);
         }
-        return userMapper.toUserDTO(u,this.relationshipService.relationshipWithUser(userId),imageMapper.toImageDTO(u.getProfilePicture(),imageService.decompressBytes(u.getProfilePicture().getPicByte())));
+        return userMapper.toUserDTO(u, this.relationshipService.relationshipWithUser(userId), imageMapper.toImageDTO(u.getProfilePicture(), imageService.decompressBytes(u.getProfilePicture().getPicByte())));
     }
 
     public void deleteUser(Long userId) {

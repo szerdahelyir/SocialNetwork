@@ -12,3 +12,6 @@ mat-card{
 .submit{
     float:right;
 }
+.infscroll::-webkit-scrollbar {
+    display: none;
+}

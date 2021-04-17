@@ -1,8 +1,7 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.PostResponseDTO;
-import com.example.demo.models.Post;
 import com.example.demo.dto.PostDTO;
+import com.example.demo.dto.PostResponseDTO;
 import com.example.demo.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

@@ -7,7 +7,10 @@
                   <ngx-avatar class="profilepic" *ngIf="user.profilePicture" size="150" [src]=user.profilePicture.picByte></ngx-avatar>
               </div>
               <div class="name">
-                  <h2>{{user.firstName}} {{user.lastName}} </h2>
+                  <h2>{{user.firstName}} {{user.lastName}} ({{age(user.dob)}})</h2>
+                  <h2><span class="material-icons">
+                    location_city
+                </span>{{user.location}} </h2>
               </div>
             </div>
         
@@ -15,10 +18,6 @@
               <ng-container *ngIf="user.description; else noDescription">
                   {{user.description}}
               </ng-container>
-        
-              <ng-template #noDescription>
-                  Please fill out your about me infos.
-              </ng-template>
             </div>
             
         </div>

@@ -33,7 +33,7 @@ public class RelationshipController {
     @GetMapping("/friends")
     public Page<UserDTO> getFriends(@RequestParam(name = "page", defaultValue = "0") int page,
                                     @RequestParam(name = "size", defaultValue = "10") int size) {
-        return this.relationshipService.getFriends(page,size);
+        return this.relationshipService.getFriends(page, size);
     }
 
     @GetMapping("/requests")

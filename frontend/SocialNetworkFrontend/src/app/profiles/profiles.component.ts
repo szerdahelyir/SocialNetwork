@@ -36,5 +36,10 @@ export class ProfilesComponent implements OnInit {
         this.router.navigate(['/home']);
       });   
     }
+
+    age(dob){
+      var timeDiff = Math.abs(Date.now() - new Date(dob).getTime());
+      return Math.floor(timeDiff / (1000 * 3600 * 24) / 365.25);
+    }
     
   }

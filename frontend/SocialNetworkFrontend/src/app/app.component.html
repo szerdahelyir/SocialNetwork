@@ -1,71 +1,33 @@
 <mat-grid-list cols="10" rowHeight="4em">
-  <mat-grid-tile [colspan]="10"><mat-toolbar color="primary" class="app-header">
-    <div><a href="/home"  class="social">SzeNetwork</a></div>
-    <span *ngIf="!isLoggedIn" class="nav-tool-items">
-      <a mat-button routerLink="login" routerLinkActive="active">Log in</a>
-      <a mat-button mat-raised-button routerLink="register" routerLinkActive="active">Register </a>
-    </span>
-    <span *ngIf="isLoggedIn" class="nav-tool-items">
-      <a mat-button (click)="logout()">Logout</a>
-    </span>
-  </mat-toolbar></mat-grid-tile>
-  <mat-grid-tile [colspan]="2"><div class="wrapper" *ngIf="isLoggedIn">
-    <div class="sidebar">
+  <mat-grid-tile [colspan]="10">
+    <mat-toolbar color="primary" class="app-header">
+      <div><a href="/home" class="social">SzeNetwork</a></div>
+      <span *ngIf="!isLoggedIn" class="nav-tool-items">
+        <a mat-button routerLink="login" routerLinkActive="active">Log in</a>
+        <a mat-button mat-raised-button routerLink="register" routerLinkActive="active">Register </a>
+      </span>
+      <span *ngIf="isLoggedIn" class="nav-tool-items">
+        <a mat-button (click)="logout()">Logout</a>
+      </span>
+    </mat-toolbar>
+  </mat-grid-tile>
+  <mat-grid-tile [colspan]="2">
+    <div class="wrapper" *ngIf="isLoggedIn">
+      <div class="sidebar">
         <ul>
-            <li><a href="/home"><i class="fas fa-home"></i>Home</a></li>
-            <li><a href="/profile"><i class="fas fa-user"></i>Profile</a></li>
-            <li><a href="/friends"><i class="fas fa-address-card"></i>Friends</a></li>
-            <li><a href="/find-friends"><i class="fas fa-project-diagram"></i>Find users</a></li>
-            <li><a href="/requests"><i class="fas fa-project-diagram"></i>Friend Requests</a></li>
-            <li><a href="/chat"><i class="fas fa-project-diagram"></i>Messages</a></li>
-            <li><a href="#" (click)="logout()"><i class="fas fa-map-pin"></i>Logout</a></li>
-        </ul> 
+          <li><a href="/home">Home</a></li>
+          <li><a href="/profile"><i class="fas fa-user"></i>Profile</a></li>
+          <li><a href="/friends"><i class="fas fa-address-card"></i>Friends</a></li>
+          <li><a href="/find-friends"><i class="fas fa-project-diagram"></i>Find users</a></li>
+          <li><a href="/requests"><i class="fas fa-project-diagram"></i>Friend Requests</a></li>
+          <li><a href="/chat"><i class="fas fa-project-diagram"></i>Messages</a></li>
+          <li><a href="#" (click)="logout()"><i class="fas fa-map-pin"></i>Logout</a></li>
+        </ul>
+      </div>
+
     </div>
-    
-  </div>
-</mat-grid-tile>
-<mat-grid-tile [colspan]="8" [rowspan]="12" class="maingrid">
-  <router-outlet></router-outlet>
-</mat-grid-tile>
-</mat-grid-list>
-
-
-
-
-
-
-
-
-
-<!-- <div id="app">
-  <nav class="navbar navbar-expand navbar-dark bg-dark">
-    <a href="#" class="navbar-brand">bezKoder</a>
-    <ul class="navbar-nav mr-auto" routerLinkActive="active">
-      <li class="nav-item">
-        <a href="/home" class="nav-link" routerLink="home">Home </a>
-      </li>
-    </ul>
-
-    <ul class="navbar-nav ml-auto" *ngIf="!isLoggedIn">
-      <li class="nav-item">
-        <a href="/register" class="nav-link" routerLink="register">Sign Up</a>
-      </li>
-      <li class="nav-item">
-        <a href="/login" class="nav-link" routerLink="login">Login</a>
-      </li>
-    </ul>
-
-    <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
-      <li class="nav-item">
-        <a href="/profile" class="nav-link" routerLink="profile">{{ username }}</a>
-      </li>
-      <li class="nav-item">
-        <a href class="nav-link" (click)="logout()">LogOut</a>
-      </li>
-    </ul>
-  </nav>
-
-  <div class="container">
+  </mat-grid-tile>
+  <mat-grid-tile [colspan]="8" [rowspan]="13" class="maingrid">
     <router-outlet></router-outlet>
-  </div>
-</div> -->
+  </mat-grid-tile>
+</mat-grid-list>

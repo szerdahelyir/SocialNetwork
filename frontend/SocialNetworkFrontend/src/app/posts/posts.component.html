@@ -1,8 +1,9 @@
 <mat-grid-list cols="2" rowHeight="100%">
     <mat-grid-tile>
-        <form *ngIf="canPost" [formGroup]="form" (ngSubmit)="submit()">
+        <form *ngIf="canPost" [formGroup]="form" (ngSubmit)="submit()" (keydown)="keyDownFunction($event)">
             <mat-form-field class="maxwidth">
-                <textarea matInput placeholder="Write your post here..." formControlName="content"></textarea>
+                <textarea matInput #postinput placeholder="Write your post here..."
+                    formControlName="content"></textarea>
                 <button mat-raised-button class="submit">Submit</button>
             </mat-form-field>
         </form>
@@ -31,9 +32,6 @@
                     </mat-card-actions>
                 </mat-card>
             </div>
-        </div>
-        <div *ngIf="posts.length==0">
-            There are no available posts.
         </div>
     </mat-grid-tile>
     <mat-grid-tile *ngIf="currpostid">

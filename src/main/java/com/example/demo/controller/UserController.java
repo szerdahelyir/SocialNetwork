@@ -33,7 +33,7 @@ public class UserController {
     public Page<UserDTO> getSearchedUsers(@RequestParam(name = "page", defaultValue = "0") int page,
                                           @RequestParam(name = "size", defaultValue = "10") int size,
                                           @RequestParam(name = "name") String name) {
-        return userService.getSearchedUsers(page, size,name);
+        return userService.getSearchedUsers(page, size, name);
     }
 
     @GetMapping(path = "{userId}")

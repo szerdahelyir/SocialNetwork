@@ -35,7 +35,7 @@ export class CommentsComponent implements OnInit {
       .subscribe((data: any) => {
         this.comments = data;
         this.scrollToElement(this.myScrollContainer);
-        
+
       }, error => {
         console.log(error);
       });
