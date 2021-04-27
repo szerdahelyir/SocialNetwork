@@ -13,7 +13,7 @@
                     <input id="file-input" type="file" (change)="onFileChanged($event)" />
                 </div>
                 <div>
-                    <h2>{{curruser.firstName}} {{curruser.lastName}}</h2>
+                    <h2>{{curruser.firstName}} {{curruser.lastName}} ({{age(curruser.dob)}})</h2>
                     <div class="location">
                         <span class="material-icons">
                             location_city

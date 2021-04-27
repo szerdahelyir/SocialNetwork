@@ -25,4 +25,9 @@ public class CommentController {
     public List<CommentResponseDTO> getCommentsOfPost(@PathVariable(value = "postId") Long postId) {
         return this.commentService.getCommentsOfPost(postId);
     }
+
+    @DeleteMapping("{commentId}")
+    public void deleteComment(@PathVariable(value = "commentId") Long commentId){
+        this.commentService.deleteComment(commentId);
+    }
 }

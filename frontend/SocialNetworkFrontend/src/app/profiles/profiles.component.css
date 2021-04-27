@@ -2,3 +2,9 @@
     margin-top:20px;
     margin-left:20px;
 }
+.location>.material-icons{
+    font-size:26px;
+}
+.location{
+    display:flex;
+}

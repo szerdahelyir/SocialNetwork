@@ -24,7 +24,7 @@ export class AppComponent {
   constructor(private tokenStorageService: TokenService,
     private messageService:MessageService,
     private userService: UserService,
-    private snakcBar:MatSnackBar) { }
+    private snackBar:MatSnackBar) { }
 
   ngOnInit(): void {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
@@ -53,9 +53,6 @@ export class AppComponent {
 
   onConnected = () => {
     console.log("connected");
-    console.log("connected");
-    console.log("connected");
-    console.log("connected");
     console.log(this.currentUser);
     this.ws.subscribe(
       "/user/" + this.curruser.id + "/queue/messages",
@@ -79,7 +76,7 @@ export class AppComponent {
     })
   }
   openSnackBar(messageFrom) {
-    this.snakcBar.openFromComponent(NotificationComponent, {
+    this.snackBar.openFromComponent(NotificationComponent, {
       data:messageFrom,
       duration: 2000,
     });

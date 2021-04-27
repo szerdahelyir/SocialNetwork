@@ -79,4 +79,11 @@ export class FindFriendsComponent implements OnInit {
     });
     window.location.reload();
   }
+
+  decline(id){
+    this.friendsService.declineFriendRequest(id).subscribe(data => {
+      console.log(data)
+    });
+    window.location.reload();
+  }
 }

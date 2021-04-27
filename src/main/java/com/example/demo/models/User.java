@@ -41,9 +41,10 @@ public class User {
     private String password;
 
     @CreatedDate
-    @Column(updatable = false)
+    @Column(updatable = false, name="date_of_registration")
     private LocalDateTime registrationDate;
 
+    @Column(name="date_of_birth")
     private LocalDateTime dob;
 
     @ManyToMany(fetch = FetchType.LAZY)

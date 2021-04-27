@@ -37,6 +37,11 @@ export class ProfileComponent implements OnInit {
     });
   }
 
+  age(dob){
+    var timeDiff = Math.abs(Date.now() - new Date(dob).getTime());
+    return Math.floor(timeDiff / (1000 * 3600 * 24) / 365.25);
+  }
+
   openDialog(): void {
     const dialogRef = this.dialog.open(EditDialogComponent, {
       width: '250px',
@@ -50,7 +55,6 @@ export class ProfileComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
       this.curruser.firstName = result.firstName;
       this.curruser.lastName = result.lastName;
       this.curruser.location = result.location;
@@ -68,21 +72,16 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  //Gets called when the user selects an image
   public onFileChanged(event) {
-    //Select File
     this.selectedFile = event.target.files[0];
     this.onUpload();
   }
-  //Gets called when the user clicks on submit to upload the image
   onUpload() {
     console.log(this.selectedFile);
 
-    //FormData API provides methods and properties to allow us easily prepare form data to be sent with POST HTTP requests.
     const uploadImageData = new FormData();
     uploadImageData.append('imageFile', this.selectedFile);
 
-    //Make a call to the Spring Boot Application to save the image
     this.http.post('http://localhost:8080/api/images/upload', uploadImageData, { observe: 'response' })
       .subscribe((response) => {
         if (response.status === 200) {

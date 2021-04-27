@@ -13,6 +13,7 @@ import com.example.demo.repository.UserRepository;
 import com.example.demo.util.AuthenticationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -58,9 +59,19 @@ public class CommentService {
     }
 
     public void createComment(Long postId, String content) {
-        Post post = this.postRepository.findPostById(postId);
-        User user = this.userRepository.findUserById(AuthenticationUtil.getAuthenticatedUserId());
+        Post post = postRepository.findPostById(postId);
+        User user = userRepository.findUserById(AuthenticationUtil.getAuthenticatedUserId());
         Comment comment = new Comment(content, user, post);
-        this.commentRepository.save(comment);
+        commentRepository.save(comment);
+    }
+
+    public void deleteComment(Long commentId) {
+        Comment toDelete=commentRepository.findCommentById(commentId);
+        commentRepository.delete(toDelete);
+    }
+
+    @Transactional
+    public void deleteComments(Long postId) {
+        commentRepository.deleteCommentsByPostId(postId);
     }
 }

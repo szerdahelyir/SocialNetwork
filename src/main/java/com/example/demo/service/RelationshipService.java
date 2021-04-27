@@ -150,4 +150,11 @@ public class RelationshipService {
     }
 
 
+    public void deleteFriend(Long id) {
+        User actionUser = userRepository.findUserById(AuthenticationUtil.getAuthenticatedUserId());
+        Relationship relationship = relationshipRepository.findRelationship(id < AuthenticationUtil.getAuthenticatedUserId() ? id : AuthenticationUtil.getAuthenticatedUserId(),
+                id > AuthenticationUtil.getAuthenticatedUserId() ? id : AuthenticationUtil.getAuthenticatedUserId());
+        relationshipRepository.delete(relationship);
+
+    }
 }

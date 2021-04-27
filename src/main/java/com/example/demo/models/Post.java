@@ -31,7 +31,7 @@ public class Post {
     private User user;
 
     @CreatedDate
-    @Column(updatable = false)
+    @Column(updatable = false, name="post_date")
     private LocalDateTime creationDate;
 
     public Post(String content, User user) {

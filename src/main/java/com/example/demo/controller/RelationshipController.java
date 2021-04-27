@@ -40,4 +40,9 @@ public class RelationshipController {
     public List<UserDTO> getFriendRequests() {
         return this.relationshipService.getFriendRequests();
     }
+
+    @DeleteMapping("/delete/{userId}")
+    public void deleteFriend(@PathVariable("userId") Long id){
+        this.relationshipService.deleteFriend(id);
+    }
 }

@@ -8,9 +8,17 @@
               </div>
               <div class="name">
                   <h2>{{user.firstName}} {{user.lastName}} ({{age(user.dob)}})</h2>
-                  <h2><span class="material-icons">
-                    location_city
-                </span>{{user.location}} </h2>
+                  <button *ngIf="user.relationship==0" mat-button>Delete friend request</button>
+                  <button *ngIf="user.relationship==1" mat-button (click)="accept(user.id)">Accept friend request</button>
+                  <button *ngIf="user.relationship==1" mat-button (click)="decline(user.id)">Decline friend request</button>
+                  <button *ngIf="user.relationship==2" mat-button>You're friends with {{user.firstName}}</button>
+                  <button *ngIf="user.relationship==3" mat-button (click)="add(user.id)">Add friend</button>
+                  <div class="location">
+                    <span class="material-icons">
+                        location_city
+                    </span>
+                    <h2>{{user.location}} </h2>
+                </div>
               </div>
             </div>
         

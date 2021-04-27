@@ -39,9 +39,6 @@ export class MessageService {
 
   onConnected = () => {
     console.log("connected");
-    console.log("connected");
-    console.log("connected");
-    console.log("connected");
     console.log(this.currentUser);
     this.ws.subscribe(
       "/user/" + this.curruser.id + "/queue/messages",
@@ -57,8 +54,6 @@ export class MessageService {
 
   onMessageReceived(msg) {
     const temp = JSON.parse(msg.body);
-    console.log(temp.messageId);
-    console.log(temp);
     this.getMessage(temp.messageId).subscribe(data => {
       console.log(data);
     })

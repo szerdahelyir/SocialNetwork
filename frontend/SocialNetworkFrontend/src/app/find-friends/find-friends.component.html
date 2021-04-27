@@ -26,10 +26,11 @@
                 </ng-template>
             </mat-card-content>
             <mat-card-actions>
-              <button *ngIf="user.relationship==0" mat-button>Friend request sent</button>
+              <button *ngIf="user.relationship==0" mat-button>Delete friend request</button>
               <button *ngIf="user.relationship==1" mat-button (click)="accept(user.id)">Accept friend request</button>
+              <button *ngIf="user.relationship==1" mat-button (click)="decline(user.id)">Decline friend request</button>
               <button *ngIf="user.relationship==2" mat-button>You're friends with {{user.firstName}}</button>
-              <button *ngIf="user.relationship==3" mat-button (click)="add(user.id)">Add fiend</button>
+              <button *ngIf="user.relationship==3" mat-button (click)="add(user.id)">Add friend</button>
               <button mat-button (click)="viewProfile(user.id)">View profile</button>
             </mat-card-actions>
           </mat-card>

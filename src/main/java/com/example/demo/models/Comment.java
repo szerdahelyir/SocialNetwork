@@ -34,7 +34,7 @@ public class Comment {
     private Post post;
 
     @CreatedDate
-    @Column(updatable = false)
+    @Column(updatable = false, name="comment_date")
     private LocalDateTime creationDate;
 
     public Comment(@NotBlank String comment, User user, Post post) {

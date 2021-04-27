@@ -5,6 +5,7 @@ import com.example.demo.dto.PostResponseDTO;
 import com.example.demo.mapper.ImageMapper;
 import com.example.demo.mapper.PostMapper;
 import com.example.demo.mapper.UserMapper;
+import com.example.demo.models.Comment;
 import com.example.demo.models.Post;
 import com.example.demo.models.User;
 import com.example.demo.repository.CommentRepository;
@@ -27,6 +28,9 @@ public class PostService {
 
     @Autowired
     private RelationshipService relationshipService;
+
+    @Autowired
+    private CommentService commentService;
 
     @Autowired
     private CommentRepository commentRepository;
@@ -97,9 +101,10 @@ public class PostService {
         postRepository.save(post);
     }
 
-//    public void updatePost(PostDTO postDTO){
-//        User user=userRepository.findUserById(AuthenticationUtil.getAuthenticatedUserId());
-//        Post post=new Post(postDTO.getContent(),user);
-//        postRepository.save(post);
-//    }
+    public void deletePost(Long postId) {
+        Post toDelete=postRepository.findPostById(postId);
+        commentService.deleteComments(postId);
+        postRepository.delete(toDelete);
+    }
+
 }

@@ -53,9 +53,8 @@ public class UserService {
     }
 
     public Page<UserDTO> getSearchedUsers(int page, int size, String name) {
-        Long id = AuthenticationUtil.getAuthenticatedUserId();
         PageRequest pageRequest = PageRequest.of(page, size);
-        Page<User> pageResult = userRepository.findSearchrResults(name, pageRequest);
+        Page<User> pageResult = userRepository.findSearchResults(name, pageRequest);
         List<UserDTO> users = pageResult
                 .stream()
                 .map(u -> {
@@ -95,9 +94,9 @@ public class UserService {
         userRepository.deleteById(userId);
     }
 
-    public void updateCustomer(UpdateUserDTO dto, Long userId) {
+    public void updateUser(UpdateUserDTO dto, Long userId) {
         User user = userRepository.findUserById(userId);
-        userMapper.updateCustomerFromDto(dto, user);
+        userMapper.updateUserFromDto(dto, user);
         userRepository.save(user);
     }
 

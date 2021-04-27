@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "chats")
+@Table(name = "conversations")
 public class Chat {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,6 +26,7 @@ public class Chat {
     @JoinColumn(name = "user_two_id", nullable = false)
     private User user2;
 
+    @Column(name="last_message_time")
     private LocalDateTime lastMessage;
 
     public Chat(User user, User user2) {

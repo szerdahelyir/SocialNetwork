@@ -42,8 +42,6 @@ export class PrivatechatComponent implements OnInit {
 
   private getMessages() {
     this.messageService.getMessages(this.currentUserId, this.id).subscribe(data => {
-      console.log(this.currentUserId, this.id);
-      console.log(data);
       this.messages = data;
       this.scrollToElement(this.myScrollContainer);
     })

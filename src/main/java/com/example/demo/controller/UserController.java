@@ -49,6 +49,6 @@ public class UserController {
     @PutMapping("/edit/{userId}")
     public void updateUser(@RequestBody UpdateUserDTO updateUserDTO,
                            @PathVariable("userId") Long userId) {
-        userService.updateCustomer(updateUserDTO, userId);
+        userService.updateUser(updateUserDTO, userId);
     }
 }

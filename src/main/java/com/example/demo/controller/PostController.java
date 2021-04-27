@@ -34,4 +34,9 @@ public class PostController {
     public void createPost(@RequestBody PostDTO postDTO){
         this.postService.createPost(postDTO);
     }
+
+    @DeleteMapping("{postId}")
+    public void deleteComment(@PathVariable(value = "postId") Long postId){
+        this.postService.deletePost(postId);
+    }
 }

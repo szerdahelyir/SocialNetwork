@@ -26,7 +26,7 @@ public class ChatMessage {
     private String message;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "chat_id", nullable = false)
+    @JoinColumn(name = "conversation_id", nullable = false)
     private Chat chat;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -38,7 +38,7 @@ public class ChatMessage {
     private User receiver;
 
     @CreatedDate
-    @Column(updatable = false)
+    @Column(updatable = false, name="date_sent")
     private LocalDateTime creationDate;
 
     private MessageStatus status;
