@@ -15,6 +15,7 @@ import com.example.demo.repository.ChatRepository;
 import com.example.demo.util.AuthenticationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -107,5 +108,12 @@ public class ChatMessageService {
                 .collect(Collectors.toList());
         return chatDTOS;
     }
+
+    @Transactional
+    public void deleteMessages(Long chatId){
+        chatMessageRepository.deleteMessagesByChatId(chatId);
+    }
+
+
 
 }

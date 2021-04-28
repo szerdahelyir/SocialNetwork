@@ -112,6 +112,7 @@ body {
 .ml-2{margin-left: 2%;}
 .width-100{width: 100%;}
 .width-25{width: 25%;}
+.cardwidth{width: 25em}
 .ml-10{margin-left: 10%;}
 .mat-grid-tile .mat-figure {
   display:block  !important;

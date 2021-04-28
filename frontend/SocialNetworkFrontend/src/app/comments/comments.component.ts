@@ -1,6 +1,7 @@
 import { Component, ElementRef, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { PostService } from '../services/post.service';
+import { TokenService } from '../services/token.service';
 
 @Component({
   selector: 'app-comments',
@@ -16,7 +17,8 @@ export class CommentsComponent implements OnInit {
   @ViewChild('commentinput') input;
 
   constructor(private postService: PostService,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder,
+    private token: TokenService) { }
 
   ngOnInit(): void {
     this.getComments();
@@ -62,6 +64,15 @@ export class CommentsComponent implements OnInit {
       left: 0,
       behavior: 'smooth'
     });
+  }
+
+  delete(id){
+    if (confirm('Are you sure?')) {
+      this.postService.deleteComment(id).subscribe(data => {
+        console.log(data)
+        this.getComments();
+      });
+    }
   }
 
 }

@@ -50,4 +50,13 @@ export class FriendsComponent implements OnInit {
     this.getFriends(request);
   }
 
+  delete(id) {
+    if (confirm('Are you sure?')) {
+      this.friendsService.deleteRelationShip(id).subscribe(data => {
+        console.log(data)
+        window.location.reload();
+      });
+    }
+  }
+
 }

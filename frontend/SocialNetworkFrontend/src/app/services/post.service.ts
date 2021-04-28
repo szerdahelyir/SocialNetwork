@@ -67,9 +67,17 @@ export class PostService {
     });
   }
 
-  addComment(comment, postid): Observable<any> {
-    return this.http.post(COMMENT_API + postid, {
+  addComment(comment, postId): Observable<any> {
+    return this.http.post(COMMENT_API + postId, {
       comment: comment.content
     });
+  }
+
+  deleteComment(commentId): Observable<any> {
+    return this.http.delete(COMMENT_API + commentId);
+  }
+
+  deletePost(postId): Observable<any> {
+    return this.http.delete(POSTS_API + postId);
   }
 }

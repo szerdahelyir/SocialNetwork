@@ -1,6 +1,6 @@
 <div #target class="infscroll">
     <div *ngFor="let c of comments" class="posts">
-        <mat-card class="example-card">
+        <mat-card class="cardwidth">
             <mat-card-header>
                 <div mat-card-avatar class="example-header-image">
                     <ngx-avatar class="profilepic" *ngIf="!c.userDTO.profilePicture" size="50" src="assets/avatar.png">
@@ -16,6 +16,10 @@
             </mat-card-content>
             <mat-card-actions>
                 <button mat-button>{{c.creationDate|date:'medium'}}</button>
+                <button *ngIf="c.userDTO.id==this.token.getUser().id" mat-raised-button color="warn"
+                            (click)="delete(c.id)"><span class="material-icons">
+                                delete
+                            </span></button>
             </mat-card-actions>
         </mat-card>
     </div>

@@ -95,4 +95,13 @@ export class PostsComponent implements OnInit {
       this.submit();
     }
   }
+
+  delete(id){
+    if (confirm('Are you sure?')) {
+      this.postService.deletePost(id).subscribe(data => {
+        console.log(data)
+        window.location.reload();
+      });
+    }
+  }
 }

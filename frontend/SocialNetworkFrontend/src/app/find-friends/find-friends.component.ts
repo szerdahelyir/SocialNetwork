@@ -15,7 +15,7 @@ export class FindFriendsComponent implements OnInit {
   users: any[];
   totalElements: number = 0;
   form: FormGroup = new FormGroup({});
-  pageSize=2;
+  pageSize = 2;
 
   constructor(private friendsService: FriendsService,
     private userService: UserService,
@@ -51,7 +51,7 @@ export class FindFriendsComponent implements OnInit {
   }
 
   search() {
-    this.getSearchedUsers({ page: "0", size: "10", name:this.form.value.search});
+    this.getSearchedUsers({ page: "0", size: "10", name: this.form.value.search });
   }
 
   viewProfile(id) {
@@ -69,21 +69,33 @@ export class FindFriendsComponent implements OnInit {
   add(id) {
     this.friendsService.addFriend(id).subscribe(data => {
       console.log(data)
+      window.location.reload();
     });
-    window.location.reload();
+
   }
 
   accept(id) {
     this.friendsService.acceptFriendRequest(id).subscribe(data => {
       console.log(data)
+      window.location.reload();
     });
-    window.location.reload();
+
   }
 
-  decline(id){
+  decline(id) {
     this.friendsService.declineFriendRequest(id).subscribe(data => {
       console.log(data)
+      window.location.reload();
     });
-    window.location.reload();
+
+  }
+
+  delete(id) {
+    if (confirm('Are you sure?')) {
+      this.friendsService.deleteRelationShip(id).subscribe(data => {
+        console.log(data)
+        window.location.reload();
+      });
+    }
   }
 }

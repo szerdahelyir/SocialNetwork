@@ -10,7 +10,7 @@
         <div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50" [scrollWindow]="false"
             (scrolled)="onScrollDown()" class="infscroll">
             <div *ngFor="let p of posts" class="posts">
-                <mat-card class="example-card">
+                <mat-card class="cardwidth">
                     <mat-card-header>
                         <div mat-card-avatar class="example-header-image">
                             <ngx-avatar class="profilepic" *ngIf="!p.userDTO.profilePicture" size="50"
@@ -29,6 +29,10 @@
                                 comment
                             </span></button>
                         <button mat-button>{{p.creationDate|date:'medium'}}</button>
+                        <button *ngIf="p.userDTO.id==this.token.getUser().id" mat-raised-button color="warn"
+                            (click)="delete(p.id)"><span class="material-icons">
+                                delete
+                            </span></button>
                     </mat-card-actions>
                 </mat-card>
             </div>

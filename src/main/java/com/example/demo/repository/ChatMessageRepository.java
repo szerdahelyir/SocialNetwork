@@ -3,6 +3,7 @@ package com.example.demo.repository;
 import com.example.demo.models.ChatMessage;
 import com.example.demo.models.MessageStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -21,4 +22,8 @@ public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long> 
             "WHERE m.chat.id = :chatid " +
             "ORDER BY m.creationDate ASC")
     List<ChatMessage> findMessagesByChatId(@Param("chatid") Long chatid);
+
+    @Modifying
+    @Query("delete from ChatMessage m  where m.chat.id = :chatId")
+    void deleteMessagesByChatId(@Param("chatId") Long chatId);
 }

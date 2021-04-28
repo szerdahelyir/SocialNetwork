@@ -39,6 +39,9 @@ public class RelationshipService {
     @Autowired
     private ImageService imageService;
 
+    @Autowired
+    private ChatMessageService chatMessageService;
+
     private User selectUserWithLowerId(User user, User otherUser) {
         return user.getId() < otherUser.getId() ? user : otherUser;
     }
@@ -154,6 +157,10 @@ public class RelationshipService {
         User actionUser = userRepository.findUserById(AuthenticationUtil.getAuthenticatedUserId());
         Relationship relationship = relationshipRepository.findRelationship(id < AuthenticationUtil.getAuthenticatedUserId() ? id : AuthenticationUtil.getAuthenticatedUserId(),
                 id > AuthenticationUtil.getAuthenticatedUserId() ? id : AuthenticationUtil.getAuthenticatedUserId());
+        Chat toDelete=chatRepository.findChat(id < AuthenticationUtil.getAuthenticatedUserId() ? id : AuthenticationUtil.getAuthenticatedUserId(),
+                id > AuthenticationUtil.getAuthenticatedUserId() ? id : AuthenticationUtil.getAuthenticatedUserId());
+        chatMessageService.deleteMessages(toDelete.getId());
+        chatRepository.delete(toDelete);
         relationshipRepository.delete(relationship);
 
     }

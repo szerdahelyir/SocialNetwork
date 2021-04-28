@@ -52,5 +52,9 @@ export class FriendsService {
     return this.http.put(FRIENDS_API + 'decline/' + id,null);
   }
 
+  deleteRelationShip(id):Observable<any>{
+    return this.http.delete(FRIENDS_API + 'delete/' + id);
+  }
+
 
 }
